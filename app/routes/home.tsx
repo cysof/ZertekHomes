@@ -1,39 +1,123 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { Search, MapPin, TrendingUp, Shield, Clock, Users } from 'lucide-react';
 import { properties } from '../data/properties';
 import { agents } from '../data/agents';
 import PropertyCard from '../components/PropertyCard';
 import AgentCard from '../components/AgentCard';
+import FeaturedCarousel from '../components/FeaturedCarousel';
+
+const heroSlides = [
+  {
+    id: 1,
+    title: 'Find Your Perfect Home in Abuja',
+    subtitle: "Luxury living in the heart of Nigeria's capital city",
+    location: 'Maitama, Abuja',
+    bg: 'from-gray-900 via-green-950 to-gray-900',
+    emoji: '🏛',
+  },
+  {
+    id: 2,
+    title: 'Premium Properties in Asokoro',
+    subtitle: 'Diplomatic zone living with world-class amenities',
+    location: 'Asokoro, Abuja',
+    bg: 'from-gray-900 via-blue-950 to-gray-900',
+    emoji: '🏰',
+  },
+  {
+    id: 3,
+    title: 'Modern Homes in Guzape District',
+    subtitle: 'Contemporary architecture meets Abuja comfort',
+    location: 'Guzape, Abuja',
+    bg: 'from-gray-900 via-emerald-950 to-gray-900',
+    emoji: '🏠',
+  },
+  {
+    id: 4,
+    title: 'Luxury Apartments in Wuse 2',
+    subtitle: 'City centre living with panoramic views',
+    location: 'Wuse 2, Abuja',
+    bg: 'from-gray-900 via-teal-950 to-gray-900',
+    emoji: '🏢',
+  },
+  {
+    id: 5,
+    title: 'Family Homes in Jabi & Life Camp',
+    subtitle: 'Safe, serene estates perfect for families',
+    location: 'Jabi, Abuja',
+    bg: 'from-gray-900 via-slate-900 to-gray-900',
+    emoji: '🏡',
+  },
+];
 
 export default function Home() {
   const forSale = properties.filter((p) => p.type === 'For Sale');
   const forRent = properties.filter((p) => p.type === 'For Rent');
+  const featuredProperties = properties.filter((p) => p.isFeatured);
   const topAgents = agents.slice(0, 4);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const slide = heroSlides[currentSlide];
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gray-900 text-white py-24 px-4">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900 to-gray-800 opacity-95"></div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-600/20 border border-green-500/30 rounded-full px-4 py-1.5 mb-6">
+      {/* Hero Section with Background Slideshow */}
+      <section
+        className={`relative bg-gradient-to-r ${slide.bg} text-white py-24 px-4 transition-all duration-1000 min-h-[600px] flex items-center`}
+      >
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+              backgroundSize: '40px 40px',
+            }}
+          ></div>
+        </div>
+
+        {/* Big background emoji */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 text-[220px] opacity-5 select-none transition-all duration-1000 hidden lg:block">
+          {slide.emoji}
+        </div>
+
+        <div className="relative max-w-4xl mx-auto text-center w-full">
+          {/* Location pill */}
+          <div className="inline-flex items-center gap-2 bg-green-600/20 border border-green-500/30 rounded-full px-4 py-1.5 mb-6 transition-all duration-700">
             <MapPin size={14} className="text-green-400" />
             <span className="text-green-400 text-sm font-medium">
-              Abuja's #1 Real Estate Marketplace
+              {slide.location}
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Find Your Perfect{' '}
-            <span className="text-green-400">Home in Abuja</span>
+
+          {/* Headline */}
+          <h1
+            key={currentSlide}
+            className="text-4xl md:text-6xl font-bold mb-4 leading-tight"
+          >
+            {slide.title.split('Abuja')[0]}
+            <span className="text-green-400">
+              {slide.title.includes('Abuja') ? 'Abuja' : ''}
+            </span>
+            {slide.title.split('Abuja')[1] || ''}
           </h1>
-          <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Buy, rent or sell properties across Maitama, Asokoro, Guzape, Jabi
-            and all major Abuja districts.
+
+          <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto transition-all duration-700">
+            {slide.subtitle}
           </p>
 
           {/* Search Bar */}
           <div className="bg-white rounded-2xl p-2 flex flex-col md:flex-row gap-2 max-w-3xl mx-auto shadow-2xl">
-            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none border-none">
+            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none">
               <option value="">All Locations</option>
               <option>Maitama</option>
               <option>Asokoro</option>
@@ -44,7 +128,7 @@ export default function Home() {
               <option>Gwarinpa</option>
               <option>Katampe</option>
             </select>
-            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none border-none">
+            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none">
               <option value="">Property Type</option>
               <option>Detached Duplex</option>
               <option>Semi-Detached</option>
@@ -55,7 +139,7 @@ export default function Home() {
               <option>Land</option>
               <option>Commercial</option>
             </select>
-            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none border-none">
+            <select className="flex-1 px-4 py-3 text-gray-700 bg-gray-50 rounded-xl text-sm outline-none">
               <option value="">Buy or Rent</option>
               <option>For Sale</option>
               <option>For Rent</option>
@@ -69,8 +153,23 @@ export default function Home() {
             </Link>
           </div>
 
+          {/* Slide Dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === currentSlide
+                    ? 'bg-green-400 w-6 h-2'
+                    : 'bg-white/30 hover:bg-white/50 w-2 h-2'
+                }`}
+              />
+            ))}
+          </div>
+
           {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mt-12">
+          <div className="flex flex-wrap justify-center gap-8 mt-10">
             {[
               { num: '2,400+', label: 'Properties' },
               { num: '850+', label: 'Happy Clients' },
@@ -86,19 +185,22 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Properties Carousel */}
+      <FeaturedCarousel properties={featuredProperties} />
+
       {/* For Sale Section */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
-                Featured Listings
+                Buy a Home
               </p>
               <h2 className="text-3xl font-bold text-gray-900">
                 Properties For Sale
               </h2>
               <p className="text-gray-500 mt-2">
-                Handpicked premium homes across Abuja
+                Premium homes available for purchase across Abuja
               </p>
             </div>
             <Link
@@ -122,7 +224,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
-                Rental Properties
+                Rent a Home
               </p>
               <h2 className="text-3xl font-bold text-gray-900">
                 Properties For Rent
@@ -186,7 +288,7 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="bg-gray-800 rounded-xl p-6 hover:bg-gray-750 transition-colors"
+                className="bg-gray-800 rounded-xl p-6 hover:bg-gray-700 transition-colors"
               >
                 <div className="bg-green-600/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4">
                   {item.icon}
