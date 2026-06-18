@@ -4,6 +4,7 @@ import agentEmma from '../static/topagents/Emma.jpeg';
 import agentMercy from '../static/topagents/mercy.jpeg';
 import zertekEbenezer from '../static/topagents/MD.jpeg';
 import agenttemmi from '../static/topagents/temi.jpeg';
+import agentNogozi from '../static/topagents/Nogozi.jpeg';
 
 export type Agent = {
   id: number;
@@ -59,21 +60,9 @@ export const agents: Agent[] = [
     email: 'temitope@zertekrealty.ng',
     image: agenttemmi,
   },
-  {
+
+    {
     id: 4,
-    name: 'Engr. Joseph Emmanuel J',
-    title: 'Property Consultant',
-    initials: 'JE',
-    listings: 31,
-    deals: 25,
-    years: 5,
-    specialization: 'Guzape, Lugbe, Apo Hilltop',
-    phone: '+234 8143963693',
-    email: 'joseph@zertekrealty.ng',
-    image: agentEmma,
-  },
-  {
-    id: 5,
     name: 'Mercy Dogara',
     title: 'Luxury Specialist',
     initials: 'MD',
@@ -85,17 +74,33 @@ export const agents: Agent[] = [
     email: 'mercy@zertekrealty.ng',
     image: agentMercy,
   },
+  
+  {
+    id: 5,
+    name: 'Engr. Joseph Emmanuel J',
+    title: 'Property Consultant',
+    initials: 'JE',
+    listings: 31,
+    deals: 25,
+    years: 5,
+    specialization: 'Guzape, Lugbe, Apo Hilltop',
+    phone: '+234 8143963693',
+    email: 'joseph@zertekrealty.ng',
+    image: agentEmma,
+  },
+
   {
     id: 6,
-    name: 'Chukwudi Eze',
+    name: 'Ngozi Okere',
     title: 'Rental Manager',
-    initials: 'CE',
+    initials: 'NO',
     listings: 29,
     deals: 22,
     years: 4,
     specialization: 'Jabi & Life Camp',
-    phone: '+234 804 567 8901',
-    email: 'chukwudi@zertekrealty.ng',
+    phone: '+234 ',
+    email: 'ngozi@zertekrealty.ng',
+    image: agentNogozi,
     // No image — will show initials
   },
 ];
