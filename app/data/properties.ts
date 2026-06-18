@@ -1,3 +1,10 @@
+// app/data/properties.ts
+import apo from '../static/featureProperty/Apo.jpeg';
+import daynacity from '../static/featureProperty/daynacity.jpeg';
+import graceland from '../static/featureProperty/graceland.jpeg';
+import iduFaiheaven from '../static/featureProperty/idu faiheaven.jpeg';
+import wumba from '../static/featureProperty/wumba.jpeg';
+
 export type Property = {
   id: number;
   title: string;
@@ -30,7 +37,7 @@ export const properties: Property[] = [
     sqft: 620,
     isNew: true,
     isFeatured: true,
-    image: '',
+    image: iduFaiheaven,
     description:
       "A magnificent 5-bedroom detached duplex nestled in the heart of Maitama, Abuja's most prestigious district. Features world-class finishes, spacious rooms, and a landscaped garden.",
     amenities: [
@@ -57,7 +64,7 @@ export const properties: Property[] = [
     sqft: 430,
     isNew: false,
     isFeatured: true,
-    image: '',
+    image: daynacity,
     description:
       'Contemporary semi-detached home in the rapidly growing Guzape district. Excellent road network, proximity to Asokoro and city centre.',
     amenities: [
@@ -84,7 +91,7 @@ export const properties: Property[] = [
     sqft: 1100,
     isNew: true,
     isFeatured: true,
-    image: '',
+    image: graceland,
     description:
       "An exceptional mansion in Asokoro, Abuja's diplomatic zone. Perfect for executives and diplomats seeking the finest in Nigerian luxury real estate.",
     amenities: [
@@ -111,7 +118,7 @@ export const properties: Property[] = [
     sqft: 280,
     isNew: false,
     isFeatured: true,
-    image: '',
+    image: apo,
     description:
       'Stunning 3-bedroom apartment on the 8th floor of an iconic high-rise in Wuse 2. Panoramic city views, gym, rooftop terrace and concierge service.',
     amenities: [
@@ -138,7 +145,7 @@ export const properties: Property[] = [
     sqft: 360,
     isNew: true,
     isFeatured: false,
-    image: '',
+    image: wumba,
     description:
       'Tastefully finished 4-bedroom terrace duplex in a serene Jabi estate. Minutes from Jabi Lake Mall, airport road and major business districts.',
     amenities: [
@@ -165,7 +172,7 @@ export const properties: Property[] = [
     sqft: 175,
     isNew: false,
     isFeatured: false,
-    image: '',
+    image: iduFaiheaven,
     description:
       'Well-maintained 2-bedroom flat in a quiet estate in Life Camp. Ideal for young professionals and small families. Close to Nizamiye Hospital.',
     amenities: [

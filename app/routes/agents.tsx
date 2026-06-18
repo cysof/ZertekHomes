@@ -1,4 +1,4 @@
-// app/routes/agents.tsx (or pages/Agents.tsx depending on your setup)
+// app/routes/agents.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -6,14 +6,11 @@ import {
   MapPin,
   Phone,
   Mail,
-  Star,
-  MessageCircle,
   ChevronLeft,
   ChevronRight,
   Filter,
   X,
   Award,
-  CheckCircle2,
   Briefcase,
   Home,
 } from 'lucide-react';
@@ -28,10 +25,10 @@ export default function AgentsPage() {
   const agentsPerPage = 6;
 
   // Get unique locations and specialties from agents
-  const locations = ['All', ...new Set(agents.map((agent) => agent.location))];
+  const locations = ['All', ...new Set(agents.map((agent) => agent.specialization))];
   const specialties = [
     'All',
-    ...new Set(agents.map((agent) => agent.specialty)),
+    ...new Set(agents.map((agent) => agent.specialization)),
   ];
 
   // Filter agents based on search and filters
@@ -40,9 +37,9 @@ export default function AgentsPage() {
       agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       agent.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesLocation =
-      selectedLocation === 'All' || agent.location === selectedLocation;
+      selectedLocation === 'All' || agent.specialization === selectedLocation;
     const matchesSpecialty =
-      selectedSpecialty === 'All' || agent.specialty === selectedSpecialty;
+      selectedSpecialty === 'All' || agent.specialization === selectedSpecialty;
     return matchesSearch && matchesLocation && matchesSpecialty;
   });
 
@@ -66,30 +63,30 @@ export default function AgentsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+      <div className="bg-[#1B2A4A] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Meet Our Expert Agents
             </h1>
-            <p className="text-gray-300 text-lg mb-8">
+            <p className="text-[#8A9A8A] text-lg mb-8">
               Professional real estate agents dedicated to helping you find your
               dream property in Abuja. With years of experience and local
               expertise, we're here to guide you every step of the way.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2">
-                <Award size={16} className="text-green-400" />
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 border border-[#4A5A4A]/20">
+                <Award size={16} className="text-[#F57C00]" />
                 <span>50+ Expert Agents</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2">
-                <Home size={16} className="text-green-400" />
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 border border-[#4A5A4A]/20">
+                <Home size={16} className="text-[#F57C00]" />
                 <span>1000+ Properties Sold</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2">
-                <Star size={16} className="text-green-400" />
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 border border-[#4A5A4A]/20">
+                <Award size={16} className="text-[#F57C00]" />
                 <span>4.9 Rating Average</span>
               </div>
             </div>
@@ -98,13 +95,13 @@ export default function AgentsPage() {
       </div>
 
       {/* Search and Filters */}
-      <div className="sticky top-16 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <div className="sticky top-16 z-40 bg-white border-b border-[#4A5A4A]/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
               <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#8A9A8A]"
                 size={18}
               />
               <input
@@ -115,19 +112,19 @@ export default function AgentsPage() {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent bg-white text-[#1B2A4A]"
               />
             </div>
 
             {/* Mobile Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl bg-white"
+              className="md:hidden flex items-center justify-center gap-2 px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl bg-white text-[#1B2A4A]"
             >
               <Filter size={18} />
               Filters
               {(selectedLocation !== 'All' || selectedSpecialty !== 'All') && (
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span className="w-2 h-2 bg-[#F57C00] rounded-full"></span>
               )}
             </button>
 
@@ -139,7 +136,7 @@ export default function AgentsPage() {
                   setSelectedLocation(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                className="px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
               >
                 {locations.map((loc) => (
                   <option key={loc} value={loc}>
@@ -153,7 +150,7 @@ export default function AgentsPage() {
                   setSelectedSpecialty(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                className="px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
               >
                 {specialties.map((spec) => (
                   <option key={spec} value={spec}>
@@ -166,7 +163,7 @@ export default function AgentsPage() {
                 searchTerm) && (
                 <button
                   onClick={resetFilters}
-                  className="flex items-center gap-2 px-4 py-2.5 text-gray-600 hover:text-gray-800 border border-gray-200 rounded-xl hover:bg-gray-50 transition"
+                  className="flex items-center gap-2 px-4 py-2.5 text-[#1B2A4A] hover:text-[#F57C00] border border-[#4A5A4A]/20 rounded-xl hover:bg-[#F57C00]/5 transition"
                 >
                   <X size={16} />
                   Reset
@@ -177,11 +174,11 @@ export default function AgentsPage() {
 
           {/* Mobile Filters Dropdown */}
           {showFilters && (
-            <div className="md:hidden mt-4 p-4 bg-gray-50 rounded-xl space-y-3">
+            <div className="md:hidden mt-4 p-4 bg-white rounded-xl space-y-3 border border-[#4A5A4A]/20">
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
               >
                 {locations.map((loc) => (
                   <option key={loc} value={loc}>
@@ -192,7 +189,7 @@ export default function AgentsPage() {
               <select
                 value={selectedSpecialty}
                 onChange={(e) => setSelectedSpecialty(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
               >
                 {specialties.map((spec) => (
                   <option key={spec} value={spec}>
@@ -203,7 +200,7 @@ export default function AgentsPage() {
               {(selectedLocation !== 'All' || selectedSpecialty !== 'All') && (
                 <button
                   onClick={resetFilters}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-100 transition"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-[#1B2A4A] border border-[#4A5A4A]/20 rounded-xl hover:bg-[#F57C00]/5 transition"
                 >
                   <X size={16} />
                   Reset Filters
@@ -216,9 +213,9 @@ export default function AgentsPage() {
 
       {/* Results Count */}
       <div className="max-w-7xl mx-auto px-4 py-6">
-        <p className="text-gray-600 text-sm">
+        <p className="text-[#8A9A8A] text-sm">
           Found{' '}
-          <span className="font-semibold text-green-600">
+          <span className="font-semibold text-[#F57C00]">
             {filteredAgents.length}
           </span>{' '}
           agents
@@ -232,17 +229,17 @@ export default function AgentsPage() {
       {/* Agents Grid */}
       <div className="max-w-7xl mx-auto px-4 pb-12">
         {filteredAgents.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
+          <div className="text-center py-16 bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/20">
             <div className="text-6xl mb-4">👤</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl font-semibold text-[#1B2A4A] mb-2">
               No agents found
             </h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-[#8A9A8A] mb-6">
               Try adjusting your search or filters
             </p>
             <button
               onClick={resetFilters}
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-xl transition"
+              className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-2 rounded-xl transition"
             >
               Clear Filters
             </button>
@@ -253,99 +250,100 @@ export default function AgentsPage() {
               {currentAgents.map((agent) => (
                 <div
                   key={agent.id}
-                  className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100"
+                  className="bg-[#1B2A4A] rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-[#F57C00]/10 transition-all duration-300 overflow-hidden group border border-[#4A5A4A]/20 flex flex-col"
                 >
-                  {/* Agent Header with Gradient */}
-                  <div className="relative bg-gradient-to-r from-green-600 to-green-700 p-6 text-white">
-                    <div className="flex items-center gap-4">
-                      <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-lg">
-                        <span className="text-3xl font-bold text-green-600">
-                          {agent.initials}
-                        </span>
+                  {/* Agent Image - Full width top section */}
+                  <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-[#1B2A4A] to-[#2A3D5A] overflow-hidden">
+                    {agent.image ? (
+                      <img
+                        src={agent.image}
+                        alt={agent.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const fallback = document.createElement('div');
+                            fallback.className =
+                              'w-full h-full bg-[#F57C00] flex items-center justify-center';
+                            fallback.innerHTML = `<span class="text-white text-6xl font-bold">${agent.initials}</span>`;
+                            parent.appendChild(fallback);
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#F57C00] flex items-center justify-center">
+                        <span className="text-white text-6xl font-bold">{agent.initials}</span>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-1">{agent.name}</h3>
-                        <p className="text-green-100 text-sm">{agent.title}</p>
-                        <div className="flex items-center gap-1 mt-2">
-                          <Star
-                            size={14}
-                            className="fill-yellow-400 text-yellow-400"
-                          />
-                          <span className="text-sm font-medium">
-                            {agent.rating}
-                          </span>
-                          <span className="text-xs text-green-100">
-                            ({agent.reviews} reviews)
-                          </span>
-                        </div>
-                      </div>
+                    )}
+                    
+                    {/* Verified Badge - Overlay on image */}
+                    <div className="absolute top-3 right-3 bg-[#F57C00] text-white text-[10px] font-bold px-3 py-1.5 rounded-full border-2 border-[#1B2A4A] shadow-lg">
+                      Verified
                     </div>
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-white/20 backdrop-blur rounded-full px-2 py-1 text-xs font-medium">
-                        {agent.specialty}
-                      </span>
-                    </div>
+                    
+                    {/* Gradient overlay at bottom for smooth transition */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#1B2A4A] to-transparent"></div>
                   </div>
 
-                  {/* Agent Details */}
-                  <div className="p-6">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <MapPin size={16} className="text-green-600 shrink-0" />
-                        <span className="text-sm">{agent.location}</span>
+                  {/* Agent Details - Bottom section */}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold text-white mb-1">{agent.name}</h3>
+                    <p className="text-[#F57C00] text-sm font-medium">{agent.title}</p>
+                    
+                    <div className="flex items-center gap-1 mt-2 mb-4">
+                      <span className="text-xs bg-[#F57C00]/20 text-[#F57C00] px-2.5 py-0.5 rounded-full font-medium border border-[#F57C00]/20">
+                        {agent.specialization}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center gap-2 text-[#8A9A8A]">
+                        <MapPin size={15} className="text-[#F57C00] shrink-0" />
+                        <span className="text-sm">{agent.specialization}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Briefcase
-                          size={16}
-                          className="text-green-600 shrink-0"
-                        />
-                        <span className="text-sm">
-                          {agent.experience} years experience
-                        </span>
+                      <div className="flex items-center gap-2 text-[#8A9A8A]">
+                        <Briefcase size={15} className="text-[#F57C00] shrink-0" />
+                        <span className="text-sm">{agent.years} years experience</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Home size={16} className="text-green-600 shrink-0" />
-                        <span className="text-sm">
-                          {agent.propertiesSold} properties sold
-                        </span>
+                      <div className="flex items-center gap-2 text-[#8A9A8A]">
+                        <Home size={15} className="text-[#F57C00] shrink-0" />
+                        <span className="text-sm">{agent.listings} properties listed</span>
                       </div>
                     </div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-6 pt-4 border-t border-gray-100">
-                      <div className="text-center bg-gray-50 rounded-xl p-2">
-                        <p className="text-lg font-bold text-gray-900">
-                          {agent.deals}
-                        </p>
-                        <p className="text-xs text-gray-500">Closed Deals</p>
+                    <div className="grid grid-cols-2 gap-3 mb-6 pt-4 border-t border-[#4A5A4A]/20">
+                      <div className="text-center bg-[#2A3D5A] rounded-xl p-2">
+                        <p className="text-lg font-bold text-white">{agent.deals}</p>
+                        <p className="text-[10px] text-[#8A9A8A] uppercase tracking-wider">Closed Deals</p>
                       </div>
-                      <div className="text-center bg-gray-50 rounded-xl p-2">
-                        <p className="text-lg font-bold text-gray-900">
-                          {agent.listings}
-                        </p>
-                        <p className="text-xs text-gray-500">Active Listings</p>
+                      <div className="text-center bg-[#2A3D5A] rounded-xl p-2">
+                        <p className="text-lg font-bold text-white">{agent.listings}</p>
+                        <p className="text-[10px] text-[#8A9A8A] uppercase tracking-wider">Active Listings</p>
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 mt-auto">
                       <Link
                         to={`/agents/${agent.id}`}
-                        className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl transition-colors"
+                        className="flex items-center justify-center gap-2 w-full bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold py-2.5 rounded-xl transition-colors"
                       >
                         View Profile
                       </Link>
                       <div className="flex gap-2">
                         <a
                           href={`tel:${agent.phone}`}
-                          className="flex-1 flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-xl transition-colors"
+                          className="flex-1 flex items-center justify-center gap-2 bg-[#2A3D5A] hover:bg-[#3A4D6A] text-white font-medium py-2.5 rounded-xl transition-colors"
                         >
                           <Phone size={14} />
                           Call
                         </a>
                         <a
                           href={`mailto:${agent.email}`}
-                          className="flex-1 flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2.5 rounded-xl transition-colors"
+                          className="flex-1 flex items-center justify-center gap-2 bg-[#2A3D5A] hover:bg-[#3A4D6A] text-white font-medium py-2.5 rounded-xl transition-colors"
                         >
                           <Mail size={14} />
                           Email
@@ -363,7 +361,7 @@ export default function AgentsPage() {
                 <button
                   onClick={() => paginate(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  className="p-2 border border-[#4A5A4A]/20 rounded-lg hover:bg-[#F57C00]/5 disabled:opacity-50 disabled:cursor-not-allowed transition text-[#1B2A4A]"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -375,8 +373,8 @@ export default function AgentsPage() {
                         onClick={() => paginate(number)}
                         className={`w-10 h-10 rounded-lg font-medium transition ${
                           currentPage === number
-                            ? 'bg-green-600 text-white'
-                            : 'border border-gray-200 hover:bg-gray-50 text-gray-600'
+                            ? 'bg-[#F57C00] text-white'
+                            : 'border border-[#4A5A4A]/20 hover:bg-[#F57C00]/5 text-[#1B2A4A]'
                         }`}
                       >
                         {number}
@@ -387,7 +385,7 @@ export default function AgentsPage() {
                 <button
                   onClick={() => paginate(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  className="p-2 border border-[#4A5A4A]/20 rounded-lg hover:bg-[#F57C00]/5 disabled:opacity-50 disabled:cursor-not-allowed transition text-[#1B2A4A]"
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -398,17 +396,17 @@ export default function AgentsPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 mt-12">
+      <div className="bg-[#1B2A4A] mt-12 border-t border-[#4A5A4A]/20">
         <div className="max-w-7xl mx-auto px-4 py-12 text-center text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Want to Join Our Team?
           </h2>
-          <p className="text-green-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-[#8A9A8A] mb-6 max-w-2xl mx-auto">
             Are you a licensed real estate professional looking to grow your
             career? Join our network of expert agents and access exclusive
             listings.
           </p>
-          <button className="bg-white text-green-600 hover:bg-gray-100 font-semibold px-8 py-3 rounded-xl transition-colors shadow-lg">
+          <button className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-8 py-3 rounded-xl transition-colors shadow-lg hover:shadow-[#F57C00]/30">
             Become an Agent
           </button>
         </div>

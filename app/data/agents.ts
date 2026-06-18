@@ -1,3 +1,10 @@
+// app/data/agents.ts
+import agentClintin from '../static/topagents/Clinton.jpeg';
+import agentEmma from '../static/topagents/Emma.jpeg';
+import agentMercy from '../static/topagents/mercy.jpeg';
+import zertekEbenezer from '../static/topagents/MD.jpeg';
+import agenttemmi from '../static/topagents/temi.jpeg';
+
 export type Agent = {
   id: number;
   name: string;
@@ -9,47 +16,77 @@ export type Agent = {
   specialization: string;
   phone: string;
   email: string;
+  image?: string; // Optional image path for agent photo
 };
 
 export const agents: Agent[] = [
   {
     id: 1,
-    name: 'Fatima Al-Hassan',
-    title: 'Senior Sales Agent',
-    initials: 'FA',
+    name: 'Dr. Ebenezer Ogbu',
+    title: 'MD',
+    initials: 'EO',
     listings: 47,
     deals: 38,
-    years: 8,
-    specialization: 'Maitama & Asokoro',
-    phone: '+234 801 234 5678',
-    email: 'fatima@zertekrealty.ng',
+    years: 10,
+    specialization: 'Guzape, Asokoro & Maitama...',
+    phone: '+234 7068022889',
+    email: 'drebiogbu@zertekrealty.ng',
+    image: zertekEbenezer,
   },
   {
     id: 2,
-    name: 'Emeka Okonkwo',
-    title: 'Property Consultant',
-    initials: 'EO',
-    listings: 31,
-    deals: 25,
+    name: 'Eng. Clinton Ebisike',
+    title: 'Senior Sales Agent',
+    initials: 'CE',
+    listings: 47,
+    deals: 38,
     years: 5,
-    specialization: 'Guzape & Wuse 2',
-    phone: '+234 802 345 6789',
-    email: 'emeka@zertekrealty.ng',
+    specialization: 'Guzape, Asokoro & Maitama...',
+    phone: '+234 7060609650',
+    email: 'clinton@zertekrealty.ng',
+    image: agentClintin,
   },
   {
     id: 3,
-    name: 'Amina Bello',
-    title: 'Luxury Specialist',
-    initials: 'AB',
-    listings: 58,
-    deals: 44,
-    years: 11,
-    specialization: 'Asokoro & Maitama',
-    phone: '+234 803 456 7890',
-    email: 'amina@zertekrealty.ng',
+    name: 'Mrs. Temitope Ogunshola',
+    title: 'Property Consultant',
+    initials: 'TO',
+    listings: 31,
+    deals: 25,
+    years: 5,
+    specialization: 'Guzape, Lugbe, Apo Hilltop',
+    phone: '+234 7037649777',
+    email: 'temitope@zertekrealty.ng',
+    image: agenttemmi,
   },
   {
     id: 4,
+    name: 'Engr. Joseph Emmanuel J',
+    title: 'Property Consultant',
+    initials: 'JE',
+    listings: 31,
+    deals: 25,
+    years: 5,
+    specialization: 'Guzape, Lugbe, Apo Hilltop',
+    phone: '+234 8143963693',
+    email: 'joseph@zertekrealty.ng',
+    image: agentEmma,
+  },
+  {
+    id: 5,
+    name: 'Mercy Dogara',
+    title: 'Luxury Specialist',
+    initials: 'MD',
+    listings: 58,
+    deals: 44,
+    years: 11,
+    specialization: 'Pyakasa & Kuje',
+    phone: '+234 7034233560',
+    email: 'mercy@zertekrealty.ng',
+    image: agentMercy,
+  },
+  {
+    id: 6,
     name: 'Chukwudi Eze',
     title: 'Rental Manager',
     initials: 'CE',
@@ -59,5 +96,6 @@ export const agents: Agent[] = [
     specialization: 'Jabi & Life Camp',
     phone: '+234 804 567 8901',
     email: 'chukwudi@zertekrealty.ng',
+    // No image — will show initials
   },
 ];
