@@ -1,49 +1,38 @@
 // app/routes/home.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { MapPin, TrendingUp, Shield, Clock, Users } from 'lucide-react';
+import { TrendingUp, Shield, Clock, Users, Phone } from 'lucide-react';
 import { properties } from '../data/properties';
 import { agents } from '../data/agents';
 import PropertyCard from '../components/PropertyCard';
 import AgentCard from '../components/AgentCard';
 import FeaturedCarousel from '../components/FeaturedCarousel';
 import heroImage from '../static/hero/idu faiheaven.jpeg';
+import heroImage2 from '../static/hero/solarcity.jpeg';
+import heroImage3 from '../static/hero/daynacity.jpeg';
+import heroImage4 from '../static/hero/graceland.jpeg';
+import heroImage5 from '../static/hero/wumba.jpeg';
 
 const heroSlides = [
   {
     id: 1,
-    title: 'Find Your Perfect Home in Abuja',
-    subtitle: "Luxury living in the heart of Nigeria's capital city",
-    location: 'Maitama, Abuja',
     image: heroImage,
   },
   {
     id: 2,
-    title: 'Premium Properties in Asokoro',
-    subtitle: 'Diplomatic zone living with world-class amenities',
-    location: 'Asokoro, Abuja',
-    image: heroImage,
+    image: heroImage2,
   },
   {
     id: 3,
-    title: 'Modern Homes in Guzape District',
-    subtitle: 'Contemporary architecture meets Abuja comfort',
-    location: 'Guzape, Abuja',
-    image: heroImage,
+    image: heroImage3,
   },
   {
     id: 4,
-    title: 'Luxury Apartments in Wuse 2',
-    subtitle: 'City centre living with panoramic views',
-    location: 'Wuse 2, Abuja',
-    image: heroImage,
+    image: heroImage4,
   },
   {
     id: 5,
-    title: 'Family Homes in Jabi & Life Camp',
-    subtitle: 'Safe, serene estates perfect for families',
-    location: 'Jabi, Abuja',
-    image: heroImage,
+    image: heroImage5,
   },
 ];
 
@@ -67,15 +56,15 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Image Slideshow */}
-      <section className="relative min-h-[600px] flex items-center overflow-hidden">
+      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img
             src={slide.image}
-            alt={slide.title}
+            alt="Zertek Realty"
             className="w-full h-full object-cover transition-all duration-1000"
           />
-          {/* Dark Overlay - Reduced opacity */}
+          {/* Dark Overlay */}
           <div className="absolute inset-0 bg-[#1B2A4A]/40"></div>
         </div>
 
@@ -92,57 +81,35 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-4xl mx-auto text-center w-full px-4 py-16">
-          {/* Location pill */}
-          <div className="inline-flex items-center gap-2 bg-[#1B2A4A]/80 backdrop-blur-sm border border-[#F57C00]/40 rounded-full px-4 py-1.5 mb-6 transition-all duration-700">
-            <MapPin size={14} className="text-[#F57C00]" />
-            <span className="text-[#F57C00] text-sm font-medium">
-              {slide.location}
-            </span>
+          {/* CTA Buttons - Centered in Hero */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              to="/properties"
+              className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-bold px-10 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-[#F57C00]/30 hover:scale-105 text-lg"
+            >
+              Browse Properties
+            </Link>
+            <Link
+              to="/contact"
+              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold px-10 py-4 rounded-xl transition-all duration-300 border border-white/30 hover:border-white/50 hover:scale-105 text-lg flex items-center gap-2"
+            >
+              <Phone size={20} />
+              Talk to an Agent
+            </Link>
           </div>
 
-          {/* Headline */}
-          <h1
-            key={currentSlide}
-            className="text-4xl md:text-6xl font-bold mb-4 leading-tight text-white drop-shadow-lg"
-          >
-            {slide.title.split('Abuja')[0]}
-            <span className="text-[#F57C00]">
-              {slide.title.includes('Abuja') ? 'Abuja' : ''}
-            </span>
-            {slide.title.split('Abuja')[1] || ''}
-          </h1>
-
-          <p className="text-gray-200 text-lg mb-10 max-w-2xl mx-auto transition-all duration-700 drop-shadow-md">
-            {slide.subtitle}
-          </p>
-
           {/* Slide Dots */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-10">
             {heroSlides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentSlide(i)}
                 className={`rounded-full transition-all duration-300 ${
                   i === currentSlide
-                    ? 'bg-[#F57C00] w-6 h-2'
-                    : 'bg-white/40 hover:bg-white/60 w-2 h-2'
+                    ? 'bg-[#F57C00] w-8 h-2'
+                    : 'bg-white/30 hover:bg-white/50 w-2 h-2'
                 }`}
               />
-            ))}
-          </div>
-
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mt-10">
-            {[
-              { num: '2,400+', label: 'Properties' },
-              { num: '850+', label: 'Happy Clients' },
-              { num: '48', label: 'Expert Agents' },
-              { num: '10yr', label: 'Experience' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-3xl font-bold text-white drop-shadow-lg">{stat.num}</p>
-                <p className="text-[#D4D4D4] text-sm mt-1 drop-shadow-md">{stat.label}</p>
-              </div>
             ))}
           </div>
         </div>
@@ -175,6 +142,36 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {forSale.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* For Rent Section */}
+      <section className="py-16 px-4 bg-[#F8FAFA]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
+                Rent a Home
+              </p>
+              <h2 className="text-3xl font-bold text-[#1B2A4A]">
+                Properties For Rent
+              </h2>
+              <p className="text-[#8A9A8A] mt-2">
+                Monthly and yearly lease options available
+              </p>
+            </div>
+            <Link
+              to="/properties"
+              className="hidden md:flex items-center gap-1 text-[#F57C00] hover:text-[#E06B00] font-semibold text-sm border-b border-[#F57C00] pb-0.5 transition-colors"
+            >
+              View All Rentals →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {forRent.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
