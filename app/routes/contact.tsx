@@ -66,35 +66,15 @@ export default function Contact() {
     }, 3000);
   };
 
-  const officeLocations = [
-    {
-      name: 'Head Office',
-      address: 'Plot 1234, Aminu Kano Crescent, Wuse 2, Abuja FCT',
-      phone: '+234 801 234 5678',
-      email: 'info@zertekrealty.ng',
-      hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
-      saturday: 'Saturday: 10:00 AM - 2:00 PM',
-      sunday: 'Sunday: Closed',
-    },
-    {
-      name: 'Maitama Branch',
-      address: 'Suite 45, Maitama Mall, Gana Street, Maitama, Abuja',
-      phone: '+234 802 345 6789',
-      email: 'maitama@zertekrealty.ng',
-      hours: 'Monday - Friday: 9:00 AM - 5:00 PM',
-      saturday: 'Saturday: 10:00 AM - 1:00 PM',
-      sunday: 'Sunday: Closed',
-    },
-    {
-      name: 'Gwarinpa Branch',
-      address: 'Shop 12, Gwarinpa Shopping Complex, 1st Avenue, Abuja',
-      phone: '+234 803 456 7890',
-      email: 'gwarinpa@zertekrealty.ng',
-      hours: 'Monday - Friday: 9:00 AM - 5:00 PM',
-      saturday: 'Saturday: 10:00 AM - 1:00 PM',
-      sunday: 'Sunday: Closed',
-    },
-  ];
+  const officeLocation = {
+    name: 'Head Office',
+    address: 'suite E1301, Apo Urban Market, Abuja FCT Nigeria',
+    phone: '+234 706 802 2889',
+    email: 'zertekrealityhome@gmail.com',
+    hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
+    saturday: 'Saturday: 10:00 AM - 2:00 PM',
+    sunday: 'Sunday: Closed',
+  };
 
   const faqs = [
     {
@@ -125,14 +105,14 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <div className="bg-[#1B2A4A] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Get In Touch With Us
           </h1>
-          <p className="text-xl text-green-100 max-w-2xl mx-auto">
+          <p className="text-xl text-[#8A9A8A] max-w-2xl mx-auto">
             Have questions about buying, selling, or renting property in Abuja?
             Our team of experts is here to help you every step of the way.
           </p>
@@ -142,31 +122,31 @@ export default function Contact() {
       {/* Quick Contact Stats */}
       <div className="max-w-7xl mx-auto px-4 -mt-8 mb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Phone size={24} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow border border-[#4A5A4A]/20">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Phone size={24} className="text-[#F57C00]" />
             </div>
-            <h3 className="font-bold text-gray-900 mb-2">24/7 Phone Support</h3>
-            <p className="text-gray-600 mb-2">+234 801 234 5678</p>
-            <p className="text-sm text-gray-500">Emergency inquiries only</p>
+            <h3 className="font-bold text-white mb-2">24/7 Phone Support</h3>
+            <p className="text-[#8A9A8A] mb-2">+234 706 802 2889</p>
+            <p className="text-sm text-[#8A9A8A]/60">Emergency inquiries only</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Mail size={24} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow border border-[#4A5A4A]/20">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Mail size={24} className="text-[#F57C00]" />
             </div>
-            <h3 className="font-bold text-gray-900 mb-2">Email Us</h3>
-            <p className="text-gray-600 mb-2">info@zertekrealty.ng</p>
-            <p className="text-sm text-gray-500">Response within 24 hours</p>
+            <h3 className="font-bold text-white mb-2">Email Us</h3>
+            <p className="text-[#8A9A8A] mb-2">zertekrealityhome@gmail.com</p>
+            <p className="text-sm text-[#8A9A8A]/60">Response within 24 hours</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaWhatsapp size={24} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow border border-[#4A5A4A]/20">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaWhatsapp size={24} className="text-[#F57C00]" />
             </div>
-            <h3 className="font-bold text-gray-900 mb-2">WhatsApp Chat</h3>
-            <p className="text-gray-600 mb-2">+234 809 012 3456</p>
-            <p className="text-sm text-gray-500">
+            <h3 className="font-bold text-white mb-2">WhatsApp Chat</h3>
+            <p className="text-[#8A9A8A] mb-2">+234 706 802 2889</p>
+            <p className="text-sm text-[#8A9A8A]/60">
               Quick response during business hours
             </p>
           </div>
@@ -176,24 +156,24 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <div className="bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/10 p-6 md:p-8">
+            <h2 className="text-2xl font-bold text-[#1B2A4A] mb-2">
               Send Us a Message
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[#8A9A8A] mb-6">
               Fill out the form below and we'll get back to you shortly.
             </p>
 
             {isSubmitted ? (
-              <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+              <div className="bg-[#F57C00]/10 border border-[#F57C00]/30 rounded-xl p-6 text-center">
                 <CheckCircle2
                   size={48}
-                  className="text-green-600 mx-auto mb-3"
+                  className="text-[#F57C00] mx-auto mb-3"
                 />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-[#1B2A4A] mb-2">
                   Message Sent!
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-[#8A9A8A]">
                   Thank you for reaching out. We'll get back to you within 24
                   hours.
                 </p>
@@ -202,7 +182,7 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-[#1B2A4A] mb-2">
                       Full Name *
                     </label>
                     <input
@@ -211,12 +191,12 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent text-[#1B2A4A]"
                       placeholder="John Doe"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-[#1B2A4A] mb-2">
                       Email Address *
                     </label>
                     <input
@@ -225,7 +205,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent text-[#1B2A4A]"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -233,7 +213,7 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-[#1B2A4A] mb-2">
                       Phone Number
                     </label>
                     <input
@@ -241,12 +221,12 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="+234 801 234 5678"
+                      className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent text-[#1B2A4A]"
+                      placeholder="+234 706 802 2889"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-[#1B2A4A] mb-2">
                       Subject *
                     </label>
                     <select
@@ -254,7 +234,7 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent text-[#1B2A4A] bg-white"
                     >
                       <option value="">Select a subject</option>
                       <option value="Buying">
@@ -273,7 +253,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[#1B2A4A] mb-2">
                     Message *
                   </label>
                   <textarea
@@ -282,7 +262,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent resize-none text-[#1B2A4A]"
                     placeholder="Tell us about your property needs or questions..."
                   />
                 </div>
@@ -290,7 +270,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold py-3 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-[#F57C00]/30"
                 >
                   {isSubmitting ? (
                     <>
@@ -308,109 +288,102 @@ export default function Contact() {
             )}
           </div>
 
-          {/* Office Locations */}
+          {/* Office Location */}
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Our Offices
+            <div className="bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/10 p-6">
+              <h2 className="text-2xl font-bold text-[#1B2A4A] mb-4">
+                Our Office
               </h2>
-              <div className="space-y-6">
-                {officeLocations.map((office, index) => (
-                  <div
-                    key={index}
-                    className="border-b border-gray-100 last:border-0 pb-5 last:pb-0"
-                  >
-                    <h3 className="font-bold text-gray-900 mb-2">
-                      {office.name}
-                    </h3>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-start gap-2 text-gray-600">
-                        <MapPin
-                          size={16}
-                          className="text-green-600 mt-0.5 shrink-0"
-                        />
-                        <span>{office.address}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Phone size={14} className="text-green-600" />
-                        <a
-                          href={`tel:${office.phone}`}
-                          className="hover:text-green-600"
-                        >
-                          {office.phone}
-                        </a>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Mail size={14} className="text-green-600" />
-                        <a
-                          href={`mailto:${office.email}`}
-                          className="hover:text-green-600"
-                        >
-                          {office.email}
-                        </a>
-                      </div>
-                      <div className="flex items-start gap-2 text-gray-600">
-                        <Clock size={14} className="text-green-600 mt-0.5" />
-                        <div>
-                          <p>{office.hours}</p>
-                          <p>{office.saturday}</p>
-                          <p>{office.sunday}</p>
-                        </div>
-                      </div>
+              <div className="space-y-3">
+                <h3 className="font-bold text-[#1B2A4A] text-lg">
+                  {officeLocation.name}
+                </h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-2 text-[#8A9A8A]">
+                    <MapPin
+                      size={16}
+                      className="text-[#F57C00] mt-0.5 shrink-0"
+                    />
+                    <span>{officeLocation.address}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#8A9A8A]">
+                    <Phone size={14} className="text-[#F57C00]" />
+                    <a
+                      href={`tel:${officeLocation.phone}`}
+                      className="hover:text-[#F57C00] transition-colors"
+                    >
+                      {officeLocation.phone}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#8A9A8A]">
+                    <Mail size={14} className="text-[#F57C00]" />
+                    <a
+                      href={`mailto:${officeLocation.email}`}
+                      className="hover:text-[#F57C00] transition-colors"
+                    >
+                      {officeLocation.email}
+                    </a>
+                  </div>
+                  <div className="flex items-start gap-2 text-[#8A9A8A]">
+                    <Clock size={14} className="text-[#F57C00] mt-0.5" />
+                    <div>
+                      <p>{officeLocation.hours}</p>
+                      <p>{officeLocation.saturday}</p>
+                      <p>{officeLocation.sunday}</p>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
 
             {/* Social Media Links */}
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/10 p-6">
+              <h2 className="text-2xl font-bold text-[#1B2A4A] mb-4">
                 Connect With Us
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="text-[#8A9A8A] mb-4">
                 Follow us on social media for the latest property listings and
                 updates.
               </p>
               <div className="flex gap-3">
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-100 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors group"
+                  className="w-10 h-10 bg-[#1B2A4A] hover:bg-[#F57C00] rounded-lg flex items-center justify-center transition-colors group"
                   aria-label="Facebook"
                 >
                   <FaFacebook
                     size={18}
-                    className="text-gray-600 group-hover:text-white"
+                    className="text-[#8A9A8A] group-hover:text-white transition-colors"
                   />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-100 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors group"
+                  className="w-10 h-10 bg-[#1B2A4A] hover:bg-[#F57C00] rounded-lg flex items-center justify-center transition-colors group"
                   aria-label="Twitter"
                 >
                   <FaTwitter
                     size={18}
-                    className="text-gray-600 group-hover:text-white"
+                    className="text-[#8A9A8A] group-hover:text-white transition-colors"
                   />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-100 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors group"
+                  className="w-10 h-10 bg-[#1B2A4A] hover:bg-[#F57C00] rounded-lg flex items-center justify-center transition-colors group"
                   aria-label="Instagram"
                 >
                   <FaInstagram
                     size={18}
-                    className="text-gray-600 group-hover:text-white"
+                    className="text-[#8A9A8A] group-hover:text-white transition-colors"
                   />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-100 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors group"
+                  className="w-10 h-10 bg-[#1B2A4A] hover:bg-[#F57C00] rounded-lg flex items-center justify-center transition-colors group"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin
                     size={18}
-                    className="text-gray-600 group-hover:text-white"
+                    className="text-[#8A9A8A] group-hover:text-white transition-colors"
                   />
                 </a>
               </div>
@@ -421,10 +394,10 @@ export default function Contact() {
         {/* FAQ Section */}
         <div className="mt-12">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
+            <h2 className="text-3xl font-bold text-[#1B2A4A] mb-3">
               Frequently Asked Questions
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-[#8A9A8A] max-w-2xl mx-auto">
               Find answers to common questions about buying, selling, and
               renting properties in Abuja.
             </p>
@@ -433,10 +406,10 @@ export default function Contact() {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow"
+                className="bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/10 p-6 hover:shadow-md hover:shadow-[#F57C00]/5 transition-shadow"
               >
-                <h3 className="font-bold text-gray-900 mb-2">{faq.question}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <h3 className="font-bold text-[#1B2A4A] mb-2">{faq.question}</h3>
+                <p className="text-[#8A9A8A] text-sm leading-relaxed">
                   {faq.answer}
                 </p>
               </div>
@@ -446,14 +419,14 @@ export default function Contact() {
 
         {/* Map Section */}
         <div className="mt-12">
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">Find Us Here</h2>
-              <p className="text-gray-600 mt-1">
-                Visit our head office in Wuse 2, Abuja
+          <div className="bg-white rounded-2xl shadow-sm border border-[#4A5A4A]/10 overflow-hidden">
+            <div className="p-6 border-b border-[#4A5A4A]/10">
+              <h2 className="text-2xl font-bold text-[#1B2A4A]">Find Us Here</h2>
+              <p className="text-[#8A9A8A] mt-1">
+                Visit our head office in Apo Urban Market, Abuja
               </p>
             </div>
-            <div className="h-96 bg-gray-200 relative">
+            <div className="h-96 bg-[#1B2A4A] relative">
               <iframe
                 title="Zertek Realty Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.827391449543!2d7.487755!3d9.081999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0c2f3e9e5b7f%3A0x2f8b5e9c7a6d4e3!2sWuse%202%2C%20Abuja%2C%20Nigeria!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
@@ -470,33 +443,33 @@ export default function Contact() {
 
         {/* Business Hours & Stats */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Building2 size={20} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-sm border border-[#4A5A4A]/20 p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Building2 size={20} className="text-[#F57C00]" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">500+</p>
-            <p className="text-sm text-gray-600">Properties Listed</p>
+            <p className="text-2xl font-bold text-white">500+</p>
+            <p className="text-sm text-[#8A9A8A]">Properties Listed</p>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Users size={20} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-sm border border-[#4A5A4A]/20 p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Users size={20} className="text-[#F57C00]" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">20+</p>
-            <p className="text-sm text-gray-600">Expert Agents</p>
+            <p className="text-2xl font-bold text-white">20+</p>
+            <p className="text-sm text-[#8A9A8A]">Expert Agents</p>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Home size={20} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-sm border border-[#4A5A4A]/20 p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Home size={20} className="text-[#F57C00]" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">98%</p>
-            <p className="text-sm text-gray-600">Client Satisfaction</p>
+            <p className="text-2xl font-bold text-white">98%</p>
+            <p className="text-sm text-[#8A9A8A]">Client Satisfaction</p>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Clock size={20} className="text-green-600" />
+          <div className="bg-[#1B2A4A] rounded-2xl shadow-sm border border-[#4A5A4A]/20 p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow">
+            <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Clock size={20} className="text-[#F57C00]" />
             </div>
-            <p className="text-2xl font-bold text-gray-900">24h</p>
-            <p className="text-sm text-gray-600">Response Time</p>
+            <p className="text-2xl font-bold text-white">24h</p>
+            <p className="text-sm text-[#8A9A8A]">Response Time</p>
           </div>
         </div>
       </div>

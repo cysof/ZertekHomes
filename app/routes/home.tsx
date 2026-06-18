@@ -206,10 +206,12 @@ export default function Home() {
         </div>
       </section>
 
+// app/routes/home.tsx — Updated Top Agents Section
+
 {/* Top Agents */}
 <section className="py-16 px-4 bg-white">
   <div className="max-w-7xl mx-auto">
-    <div className="flex items-end justify-between mb-10">
+    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
       <div>
         <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
           Our Team
@@ -231,15 +233,17 @@ export default function Home() {
         <AgentCard key={agent.id} agent={agent} />
       ))}
     </div>
-    {/* Mobile "View All" Button - Shows below the agents on mobile */}
-    <div className="mt-8 text-center md:hidden">
-      <Link
-        to="/agents"
-        className="inline-flex items-center gap-2 bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
-      >
-        View All Agents →
-      </Link>
-    </div>
+    {/* Show "View All" button only if there are more agents than shown */}
+    {agents.length > topAgents.length && (
+      <div className="mt-8 text-center md:hidden">
+        <Link
+          to="/agents"
+          className="inline-flex items-center gap-2 bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+        >
+          View All Agents →
+        </Link>
+      </div>
+    )}
   </div>
 </section>
 

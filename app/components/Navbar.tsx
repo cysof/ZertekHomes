@@ -54,7 +54,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center">
             <Link
-              to="/contact"
+              to="/properties"
               className="bg-[#F57C00] hover:bg-[#E06B00] text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 shadow-lg hover:shadow-[#F57C00]/25"
             >
               List Property
@@ -91,7 +91,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            to="/contact"
+            to="/properties"
             onClick={() => setMenuOpen(false)}
             className="block w-full text-center bg-[#F57C00] hover:bg-[#E06B00] text-white text-sm font-semibold px-5 py-3 rounded-lg mt-3 transition-colors"
           >

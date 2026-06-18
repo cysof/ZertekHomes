@@ -20,7 +20,7 @@ export default function Footer() {
             </Link>
             <p className="text-sm text-[#8A9A8A] leading-relaxed mb-4">
               Abuja's trusted real estate marketplace. Buying, selling and
-              renting properties across all FCT districts since 2014.
+              renting properties across all FCT districts since 2020.
             </p>
             <div className="flex gap-3">
               <a
@@ -188,18 +188,18 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm text-[#8A9A8A]">
                 <MapPin size={16} className="text-[#F57C00] mt-0.5 shrink-0" />
-                <span>Plot 1234, Aminu Kano Crescent, Wuse 2, Abuja FCT</span>
+                <span>suite E1301, Apo Urban Market, Abuja FCT Nigeria</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-[#8A9A8A]">
                 <Phone size={16} className="text-[#F57C00] shrink-0" />
-                <a href="tel:+2348012345678" className="hover:text-[#F57C00] transition-colors">
-                  +234 801 234 5678
+                <a href="tel:+2347068022889" className="hover:text-[#F57C00] transition-colors">
+                  +234 706 802 2889
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-[#8A9A8A]">
                 <Mail size={16} className="text-[#F57C00] shrink-0" />
-                <a href="mailto:info@zertekrealty.ng" className="hover:text-[#F57C00] transition-colors">
-                  info@zertekrealty.ng
+                <a href="mailto:zertekrealityhome@gmail.com" className="hover:text-[#F57C00] transition-colors">
+                  zertekrealityhome@gmail.com
                 </a>
               </li>
             </ul>
