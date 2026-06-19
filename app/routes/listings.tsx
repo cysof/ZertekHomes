@@ -113,18 +113,19 @@ export default function Listings() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
-      <div className="bg-gray-900 text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-green-400 text-sm font-semibold uppercase tracking-wider mb-2">
-            Browse Properties
-          </p>
-          <h1 className="text-4xl font-bold mb-3">All Properties in Abuja</h1>
-          <p className="text-gray-400">
-            Find your perfect home across all FCT districts
-          </p>
-        </div>
-      </div>
-
+<div className="bg-[#1B2A4A] text-white py-12 px-4">
+  <div className="max-w-7xl mx-auto">
+    <p className="text-[#F57C00] text-sm font-semibold uppercase tracking-wider mb-2">
+      Browse Properties
+    </p>
+    <h1 className="text-4xl font-bold mb-3 text-[#4B5320]">
+      All Properties in Abuja
+    </h1>
+    <p className="text-[#8A9A8A]">
+      Find your perfect home across all FCT districts
+    </p>
+  </div>
+</div>
       {/* Search + Filter Bar */}
       <div className="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">

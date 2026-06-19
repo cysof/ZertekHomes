@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import logo from '../static/logo.jpeg';
+import logo from '../static/logo.png';
 
 export default function Footer() {
   return (

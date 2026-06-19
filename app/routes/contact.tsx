@@ -69,7 +69,7 @@ export default function Contact() {
   const officeLocation = {
     name: 'Head Office',
     address: 'suite E1301, Apo Urban Market, Abuja FCT Nigeria',
-    phone: '+234 706 802 2889',
+    phone: '+234 9169029904',
     email: 'zertekrealityhome@gmail.com',
     hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
     saturday: 'Saturday: 10:00 AM - 2:00 PM',
@@ -127,7 +127,7 @@ export default function Contact() {
               <Phone size={24} className="text-[#F57C00]" />
             </div>
             <h3 className="font-bold text-white mb-2">24/7 Phone Support</h3>
-            <p className="text-[#8A9A8A] mb-2">+234 706 802 2889</p>
+            <p className="text-[#8A9A8A] mb-2">+234 9169029904</p>
             <p className="text-sm text-[#8A9A8A]/60">Emergency inquiries only</p>
           </div>
 
@@ -145,7 +145,7 @@ export default function Contact() {
               <FaWhatsapp size={24} className="text-[#F57C00]" />
             </div>
             <h3 className="font-bold text-white mb-2">WhatsApp Chat</h3>
-            <p className="text-[#8A9A8A] mb-2">+234 706 802 2889</p>
+            <p className="text-[#8A9A8A] mb-2">+234 7013445496</p>
             <p className="text-sm text-[#8A9A8A]/60">
               Quick response during business hours
             </p>

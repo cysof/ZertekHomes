@@ -3,44 +3,26 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Search,
-  MapPin,
-  Phone,
-  Mail,
   ChevronLeft,
   ChevronRight,
-  Filter,
   X,
   Award,
-  Briefcase,
   Home,
 } from 'lucide-react';
 import { agents } from '../data/agents';
+import AgentCard from '../components/AgentCard';
 
 export default function AgentsPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('All');
-  const [selectedSpecialty, setSelectedSpecialty] = useState('All');
-  const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const agentsPerPage = 6;
 
-  // Get unique locations and specialties from agents
-  const locations = ['All', ...new Set(agents.map((agent) => agent.specialization))];
-  const specialties = [
-    'All',
-    ...new Set(agents.map((agent) => agent.specialization)),
-  ];
-
-  // Filter agents based on search and filters
+  // Filter agents based on search
   const filteredAgents = agents.filter((agent) => {
     const matchesSearch =
       agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      agent.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLocation =
-      selectedLocation === 'All' || agent.specialization === selectedLocation;
-    const matchesSpecialty =
-      selectedSpecialty === 'All' || agent.specialization === selectedSpecialty;
-    return matchesSearch && matchesLocation && matchesSpecialty;
+      agent.position.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
   });
 
   // Pagination
@@ -56,8 +38,6 @@ export default function AgentsPage() {
 
   // Reset filters
   const resetFilters = () => {
-    setSelectedLocation('All');
-    setSelectedSpecialty('All');
     setSearchTerm('');
     setCurrentPage(1);
   };
@@ -94,7 +74,7 @@ export default function AgentsPage() {
         </div>
       </div>
 
-      {/* Search and Filters */}
+      {/* Search Bar */}
       <div className="sticky top-16 z-40 bg-white border-b border-[#4A5A4A]/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row gap-4">
@@ -106,7 +86,7 @@ export default function AgentsPage() {
               />
               <input
                 type="text"
-                placeholder="Search by agent name or title..."
+                placeholder="Search by agent name or position..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -116,98 +96,17 @@ export default function AgentsPage() {
               />
             </div>
 
-            {/* Mobile Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden flex items-center justify-center gap-2 px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl bg-white text-[#1B2A4A]"
-            >
-              <Filter size={18} />
-              Filters
-              {(selectedLocation !== 'All' || selectedSpecialty !== 'All') && (
-                <span className="w-2 h-2 bg-[#F57C00] rounded-full"></span>
-              )}
-            </button>
-
-            {/* Desktop Filters */}
-            <div className="hidden md:flex gap-3">
-              <select
-                value={selectedLocation}
-                onChange={(e) => {
-                  setSelectedLocation(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
+            {/* Clear Search Button */}
+            {searchTerm && (
+              <button
+                onClick={resetFilters}
+                className="flex items-center gap-2 px-4 py-2.5 text-[#1B2A4A] hover:text-[#F57C00] border border-[#4A5A4A]/20 rounded-xl hover:bg-[#F57C00]/5 transition"
               >
-                {locations.map((loc) => (
-                  <option key={loc} value={loc}>
-                    {loc === 'All' ? 'All Locations' : loc}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={selectedSpecialty}
-                onChange={(e) => {
-                  setSelectedSpecialty(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
-              >
-                {specialties.map((spec) => (
-                  <option key={spec} value={spec}>
-                    {spec === 'All' ? 'All Specialties' : spec}
-                  </option>
-                ))}
-              </select>
-              {(selectedLocation !== 'All' ||
-                selectedSpecialty !== 'All' ||
-                searchTerm) && (
-                <button
-                  onClick={resetFilters}
-                  className="flex items-center gap-2 px-4 py-2.5 text-[#1B2A4A] hover:text-[#F57C00] border border-[#4A5A4A]/20 rounded-xl hover:bg-[#F57C00]/5 transition"
-                >
-                  <X size={16} />
-                  Reset
-                </button>
-              )}
-            </div>
+                <X size={16} />
+                Clear
+              </button>
+            )}
           </div>
-
-          {/* Mobile Filters Dropdown */}
-          {showFilters && (
-            <div className="md:hidden mt-4 p-4 bg-white rounded-xl space-y-3 border border-[#4A5A4A]/20">
-              <select
-                value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
-              >
-                {locations.map((loc) => (
-                  <option key={loc} value={loc}>
-                    {loc === 'All' ? 'All Locations' : loc}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={selectedSpecialty}
-                onChange={(e) => setSelectedSpecialty(e.target.value)}
-                className="w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] bg-white text-[#1B2A4A]"
-              >
-                {specialties.map((spec) => (
-                  <option key={spec} value={spec}>
-                    {spec === 'All' ? 'All Specialties' : spec}
-                  </option>
-                ))}
-              </select>
-              {(selectedLocation !== 'All' || selectedSpecialty !== 'All') && (
-                <button
-                  onClick={resetFilters}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-[#1B2A4A] border border-[#4A5A4A]/20 rounded-xl hover:bg-[#F57C00]/5 transition"
-                >
-                  <X size={16} />
-                  Reset Filters
-                </button>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
@@ -220,9 +119,6 @@ export default function AgentsPage() {
           </span>{' '}
           agents
           {searchTerm && ` matching "${searchTerm}"`}
-          {selectedLocation !== 'All' && ` in ${selectedLocation}`}
-          {selectedSpecialty !== 'All' &&
-            ` specializing in ${selectedSpecialty}`}
         </p>
       </div>
 
@@ -235,123 +131,20 @@ export default function AgentsPage() {
               No agents found
             </h3>
             <p className="text-[#8A9A8A] mb-6">
-              Try adjusting your search or filters
+              Try adjusting your search
             </p>
             <button
               onClick={resetFilters}
               className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-2 rounded-xl transition"
             >
-              Clear Filters
+              Clear Search
             </button>
           </div>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {currentAgents.map((agent) => (
-                <div
-                  key={agent.id}
-                  className="bg-[#1B2A4A] rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-[#F57C00]/10 transition-all duration-300 overflow-hidden group border border-[#4A5A4A]/20 flex flex-col"
-                >
-                  {/* Agent Image - Full width top section */}
-                  <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-[#1B2A4A] to-[#2A3D5A] overflow-hidden">
-                    {agent.image ? (
-                      <img
-                        src={agent.image}
-                        alt={agent.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            const fallback = document.createElement('div');
-                            fallback.className =
-                              'w-full h-full bg-[#F57C00] flex items-center justify-center';
-                            fallback.innerHTML = `<span class="text-white text-6xl font-bold">${agent.initials}</span>`;
-                            parent.appendChild(fallback);
-                          }
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-[#F57C00] flex items-center justify-center">
-                        <span className="text-white text-6xl font-bold">{agent.initials}</span>
-                      </div>
-                    )}
-                    
-                    {/* Verified Badge - Overlay on image */}
-                    <div className="absolute top-3 right-3 bg-[#F57C00] text-white text-[10px] font-bold px-3 py-1.5 rounded-full border-2 border-[#1B2A4A] shadow-lg">
-                      Verified
-                    </div>
-                    
-                    {/* Gradient overlay at bottom for smooth transition */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#1B2A4A] to-transparent"></div>
-                  </div>
-
-                  {/* Agent Details - Bottom section */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold text-white mb-1">{agent.name}</h3>
-                    <p className="text-[#F57C00] text-sm font-medium">{agent.title}</p>
-                    
-                    <div className="flex items-center gap-1 mt-2 mb-4">
-                      <span className="text-xs bg-[#F57C00]/20 text-[#F57C00] px-2.5 py-0.5 rounded-full font-medium border border-[#F57C00]/20">
-                        {agent.specialization}
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 mb-6">
-                      <div className="flex items-center gap-2 text-[#8A9A8A]">
-                        <MapPin size={15} className="text-[#F57C00] shrink-0" />
-                        <span className="text-sm">{agent.specialization}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[#8A9A8A]">
-                        <Briefcase size={15} className="text-[#F57C00] shrink-0" />
-                        <span className="text-sm">{agent.years} years experience</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[#8A9A8A]">
-                        <Home size={15} className="text-[#F57C00] shrink-0" />
-                        <span className="text-sm">{agent.listings} properties listed</span>
-                      </div>
-                    </div>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 gap-3 mb-6 pt-4 border-t border-[#4A5A4A]/20">
-                      <div className="text-center bg-[#2A3D5A] rounded-xl p-2">
-                        <p className="text-lg font-bold text-white">{agent.deals}</p>
-                        <p className="text-[10px] text-[#8A9A8A] uppercase tracking-wider">Closed Deals</p>
-                      </div>
-                      <div className="text-center bg-[#2A3D5A] rounded-xl p-2">
-                        <p className="text-lg font-bold text-white">{agent.listings}</p>
-                        <p className="text-[10px] text-[#8A9A8A] uppercase tracking-wider">Active Listings</p>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="space-y-2 mt-auto">
-                      <Link
-                        to={`/agents/${agent.id}`}
-                        className="flex items-center justify-center gap-2 w-full bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold py-2.5 rounded-xl transition-colors"
-                      >
-                        View Profile
-                      </Link>
-                      <div className="flex gap-2">
-                        <a
-                          href={`tel:${agent.phone}`}
-                          className="flex-1 flex items-center justify-center gap-2 bg-[#2A3D5A] hover:bg-[#3A4D6A] text-white font-medium py-2.5 rounded-xl transition-colors"
-                        >
-                          <Phone size={14} />
-                          Call
-                        </a>
-                        <a
-                          href={`mailto:${agent.email}`}
-                          className="flex-1 flex items-center justify-center gap-2 bg-[#2A3D5A] hover:bg-[#3A4D6A] text-white font-medium py-2.5 rounded-xl transition-colors"
-                        >
-                          <Mail size={14} />
-                          Email
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <AgentCard key={agent.id} agent={agent} />
               ))}
             </div>
 

@@ -50,29 +50,29 @@ export default function PropertyCard({ property }: Props) {
 
       {/* Content */}
       <div className="p-4">
-        <p className="text-xl font-bold text-[#1B2A4A] mb-1">
+        <p className="text-xl font-bold text-[#4B5320] mb-1">
           {property.priceLabel}
         </p>
-        <h3 className="font-semibold text-[#1B2A4A] mb-2 group-hover:text-[#F57C00] transition-colors line-clamp-1">
+        <h3 className="font-semibold text-[#4B5320] mb-2 group-hover:text-[#F57C00] transition-colors line-clamp-1">
           {property.title}
         </h3>
-        <div className="flex items-center gap-1 text-[#8A9A8A] text-sm mb-3">
+        <div className="flex items-center gap-1 text-[#4B5320] text-sm mb-3">
           <MapPin size={13} className="text-[#F57C00] shrink-0" />
           <span>{property.location}, Abuja</span>
         </div>
 
         {/* Features */}
-        <div className="flex items-center gap-4 pt-3 border-t border-[#4A5A4A]/10 text-sm text-[#8A9A8A]">
+        <div className="flex items-center gap-4 pt-3 border-t border-[#4A5A4A]/10 text-sm text-[#4B5320]">
           <div className="flex items-center gap-1">
-            <Bed size={14} className="text-[#8A9A8A]" />
+            <Bed size={14} className="text-[#4B5320]" />
             <span>{property.beds} Beds</span>
           </div>
           <div className="flex items-center gap-1">
-            <Bath size={14} className="text-[#8A9A8A]" />
+            <Bath size={14} className="text-[#4B5320]" />
             <span>{property.baths} Baths</span>
           </div>
           <div className="flex items-center gap-1">
-            <Maximize2 size={14} className="text-[#8A9A8A]" />
+            <Maximize2 size={14} className="text-[#4B5320]" />
             <span>{property.sqft} sqft</span>
           </div>
         </div>

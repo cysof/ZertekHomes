@@ -119,35 +119,95 @@ export default function Home() {
       <FeaturedCarousel properties={featuredProperties} />
 
       {/* For Sale Section */}
-      <section className="py-16 px-4 bg-white">
+<section className="py-16 px-4 bg-white">
+  <div className="max-w-7xl mx-auto">
+    <div className="flex items-end justify-between mb-10">
+      <div>
+        <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
+          Buy a Home
+        </p>
+        <h2 className="text-3xl font-bold text-[#4B5320]">
+          Properties For Sale
+        </h2>
+        <p className="text-[#8A9A8A] mt-2">
+          Premium homes available for purchase across Abuja
+        </p>
+      </div>
+      <Link
+        to="/properties"
+        className="hidden md:flex items-center gap-1 text-[#F57C00] hover:text-[#E06B00] font-semibold text-sm border-b border-[#F57C00] pb-0.5 transition-colors"
+      >
+        View All Properties →
+      </Link>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {forSale.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* For Rent Section */}
+<section className="py-16 px-4 bg-[#F8FAFA]">
+  <div className="max-w-7xl mx-auto">
+    <div className="flex items-end justify-between mb-10">
+      <div>
+        <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
+          Rent a Home
+        </p>
+        <h2 className="text-3xl font-bold text-[#4B5320]">
+          Properties For Rent
+        </h2>
+        <p className="text-[#8A9A8A] mt-2">
+          Monthly and yearly lease options available
+        </p>
+      </div>
+      <Link
+        to="/properties"
+        className="hidden md:flex items-center gap-1 text-[#F57C00] hover:text-[#E06B00] font-semibold text-sm border-b border-[#F57C00] pb-0.5 transition-colors"
+      >
+        View All Rentals →
+      </Link>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {forRent.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
+    </div>
+  </div>
+</section>
+
+
+      {/* For Rent Section */}
+      <section className="py-16 px-4 bg-[#F8FAFA]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
               <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
-                Buy a Home
+                Rent a Home
               </p>
               <h2 className="text-3xl font-bold text-[#1B2A4A]">
-                Properties For Sale
+                Properties For Rent
               </h2>
               <p className="text-[#8A9A8A] mt-2">
-                Premium homes available for purchase across Abuja
+                Monthly and yearly lease options available
               </p>
             </div>
             <Link
               to="/properties"
               className="hidden md:flex items-center gap-1 text-[#F57C00] hover:text-[#E06B00] font-semibold text-sm border-b border-[#F57C00] pb-0.5 transition-colors"
             >
-              View All Properties →
+              View All Rentals →
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {forSale.map((property) => (
+            {forRent.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
         </div>
       </section>
-
 
       {/* Why Choose Us */}
       <section className="py-16 px-4 bg-[#1B2A4A] text-white">
@@ -206,8 +266,6 @@ export default function Home() {
         </div>
       </section>
 
-// app/routes/home.tsx — Updated Top Agents Section
-
 {/* Top Agents */}
 <section className="py-16 px-4 bg-white">
   <div className="max-w-7xl mx-auto">
@@ -216,7 +274,7 @@ export default function Home() {
         <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
           Our Team
         </p>
-        <h2 className="text-3xl font-bold text-[#1B2A4A]">Top Agents</h2>
+        <h2 className="text-3xl font-bold text-[#4B5320]">Top Agents</h2>
         <p className="text-[#8A9A8A] mt-2">
           Licensed professionals with deep Abuja market knowledge
         </p>
@@ -233,19 +291,19 @@ export default function Home() {
         <AgentCard key={agent.id} agent={agent} />
       ))}
     </div>
-    {/* Show "View All" button only if there are more agents than shown */}
     {agents.length > topAgents.length && (
       <div className="mt-8 text-center md:hidden">
         <Link
           to="/agents"
           className="inline-flex items-center gap-2 bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
         >
-          View All Agents →
+          View All {agents.length} Agents →
         </Link>
       </div>
     )}
   </div>
 </section>
+
 
       {/* CTA Banner */}
       <section className="py-16 px-4 bg-[#F57C00]">
@@ -268,7 +326,7 @@ export default function Home() {
               to="/contact"
               className="bg-[#1B2A4A] hover:bg-[#2A3D5A] text-white font-bold px-8 py-3 rounded-xl transition-colors border border-white/20 shadow-lg"
             >
-              Talk to an Agent
+              Talk to an Consultants
             </Link>
           </div>
         </div>
