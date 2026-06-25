@@ -1,5 +1,5 @@
 // components/Footer.tsx
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import logo from '../static/logo.png';

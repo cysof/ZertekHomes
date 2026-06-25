@@ -1,6 +1,6 @@
 // app/routes/agents.tsx
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import {
   Search,
   ChevronLeft,
@@ -9,38 +9,91 @@ import {
   Award,
   Home,
 } from 'lucide-react';
-import { agents } from '../data/agents';
 import AgentCard from '../components/AgentCard';
+import { api, type ApiAgent } from '../lib/api';
 
 export default function AgentsPage() {
+  const [agents, setAgents] = useState<ApiAgent[]>([]);
+  const [filteredAgents, setFilteredAgents] = useState<ApiAgent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const agentsPerPage = 6;
 
-  // Filter agents based on search
-  const filteredAgents = agents.filter((agent) => {
-    const matchesSearch =
-      agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      agent.position.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
-  });
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        setLoading(true);
+        const data = await api.getAgents();
+        setAgents(data);
+        setFilteredAgents(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load agents');
+        console.error('Error fetching agents:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Pagination
+    fetchAgents();
+  }, []);
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredAgents(agents);
+      return;
+    }
+
+    const q = searchTerm.toLowerCase();
+    const filtered = agents.filter(
+      (agent) =>
+        (agent.name ?? '').toLowerCase().includes(q) ||
+        (agent.position ?? '').toLowerCase().includes(q)
+    );
+    setFilteredAgents(filtered);
+    setCurrentPage(1);
+  }, [searchTerm, agents]);
+
   const indexOfLastAgent = currentPage * agentsPerPage;
   const indexOfFirstAgent = indexOfLastAgent - agentsPerPage;
-  const currentAgents = filteredAgents.slice(
-    indexOfFirstAgent,
-    indexOfLastAgent
-  );
+  const currentAgents = filteredAgents.slice(indexOfFirstAgent, indexOfLastAgent);
   const totalPages = Math.ceil(filteredAgents.length / agentsPerPage);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // Reset filters
   const resetFilters = () => {
     setSearchTerm('');
     setCurrentPage(1);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#F57C00] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-[#8A9A8A]">Loading Consultant...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="text-4xl mb-4">⚠️</div>
+          <p className="text-red-500 mb-2">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-2 rounded-xl transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -49,17 +102,17 @@ export default function AgentsPage() {
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Meet Our Expert Agents
+              Meet Our Experience Consultant
             </h1>
             <p className="text-[#8A9A8A] text-lg mb-8">
-              Professional real estate agents dedicated to helping you find your
+              Professional real estate Consultant dedicated to helping you find your
               dream property in Abuja. With years of experience and local
               expertise, we're here to guide you every step of the way.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 border border-[#4A5A4A]/20">
                 <Award size={16} className="text-[#F57C00]" />
-                <span>50+ Expert Agents</span>
+                <span>{agents.length}+ Experience Consultant</span>
               </div>
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 border border-[#4A5A4A]/20">
                 <Home size={16} className="text-[#F57C00]" />
@@ -78,7 +131,6 @@ export default function AgentsPage() {
       <div className="sticky top-16 z-40 bg-white border-b border-[#4A5A4A]/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row gap-4">
-            {/* Search Bar */}
             <div className="flex-1 relative">
               <Search
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#8A9A8A]"
@@ -95,8 +147,6 @@ export default function AgentsPage() {
                 className="w-full pl-10 pr-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:border-transparent bg-white text-[#1B2A4A]"
               />
             </div>
-
-            {/* Clear Search Button */}
             {searchTerm && (
               <button
                 onClick={resetFilters}
@@ -148,7 +198,6 @@ export default function AgentsPage() {
               ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-12">
                 <button
@@ -189,21 +238,24 @@ export default function AgentsPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-[#1B2A4A] mt-12 border-t border-[#4A5A4A]/20">
-        <div className="max-w-7xl mx-auto px-4 py-12 text-center text-white">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Want to Join Our Team?
-          </h2>
-          <p className="text-[#8A9A8A] mb-6 max-w-2xl mx-auto">
-            Are you a licensed real estate professional looking to grow your
-            career? Join our network of expert agents and access exclusive
-            listings.
-          </p>
-          <button className="bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-8 py-3 rounded-xl transition-colors shadow-lg hover:shadow-[#F57C00]/30">
-            Become an Agent
-          </button>
-        </div>
-      </div>
+<div className="bg-[#1B2A4A] mt-12 border-t border-[#4A5A4A]/20">
+  <div className="max-w-7xl mx-auto px-4 py-12 text-center text-white">
+    <h2 className="text-2xl md:text-3xl font-bold mb-4">
+      Want to Join Our Team?
+    </h2>
+    <p className="text-[#8A9A8A] mb-6 max-w-2xl mx-auto">
+      Are you a licensed real estate professional looking to grow your
+      career? Join our network of expert agents and access exclusive
+      listings.
+    </p>
+    <Link
+      to="/auth/register"
+      className="inline-block bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-8 py-3 rounded-xl transition-colors shadow-lg hover:shadow-[#F57C00]/30"
+    >
+      Become a Consultant
+    </Link>
+  </div>
+</div>
     </div>
   );
 }

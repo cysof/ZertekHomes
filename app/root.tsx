@@ -1,4 +1,4 @@
-// root.tsx
+// app/root.tsx
 import {
   isRouteErrorResponse,
   Links,
@@ -7,13 +7,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
-
 import type { Route } from './+types/root';
 import './app.css';
-
 import Navbar from './components/Navbar';
-// Use debug version temporarily
 import Footer from './components/Footer';
+import { getUser } from './lib/session.server';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -27,6 +25,13 @@ export const links: Route.LinksFunction = () => [
     href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
   },
 ];
+
+// Expose the logged-in user to every route in the app via
+// useRouteLoaderData('root') — runs on every navigation server-side.
+export async function loader({ request }: Route.LoaderArgs) {
+  const user = await getUser(request);
+  return { user };
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -77,7 +82,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           <code>{stack}</code>
         </pre>
       )}
-
       <p>
         <a
           href="/"

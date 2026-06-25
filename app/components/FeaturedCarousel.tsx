@@ -5,11 +5,11 @@ import { Link } from 'react-router';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import type { Property } from '../types';
+import type { ApiProperty } from '../lib/api';
 import PropertyCard from './PropertyCard';
 
 type Props = {
-  properties: Property[];
+  properties: ApiProperty[];
 };
 
 export default function FeaturedCarousel({ properties }: Props) {
@@ -25,6 +25,10 @@ export default function FeaturedCarousel({ properties }: Props) {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
+  if (properties.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-16 px-4 bg-[#F8FAFA]">
