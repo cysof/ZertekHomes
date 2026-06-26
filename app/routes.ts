@@ -1,4 +1,3 @@
-// app/routes.ts
 import { type RouteConfig, index, route } from '@react-router/dev/routes';
 
 export default [
@@ -8,10 +7,15 @@ export default [
   route('agents', 'routes/agents.tsx'),
   route('agent/:id', 'routes/agent.$id.tsx'),
   route('contact', 'routes/contact.tsx'),
-  
 
   // Auth routes
   route('auth/login', 'routes/auth.login.tsx'),
   route('auth/register', 'routes/auth.register.tsx'),
   route('auth/logout', 'routes/auth.logout.tsx'),
+
+  // Dashboard routes
+  route('dashboard', 'routes/dashboard.tsx'),
+  route('dashboard/client', 'routes/dashboard.client.tsx'),
+  route('dashboard/agent', 'routes/dashboard.agent.tsx'),
+  route('dashboard/affiliate', 'routes/dashboard.affiliate.tsx'),
 ] satisfies RouteConfig;

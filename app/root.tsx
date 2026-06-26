@@ -1,4 +1,3 @@
-// app/root.tsx
 import {
   isRouteErrorResponse,
   Links,
@@ -26,8 +25,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-// Expose the logged-in user to every route in the app via
-// useRouteLoaderData('root') — runs on every navigation server-side.
+// This runs on every navigation and feeds the Navbar via useRouteLoaderData('root')
 export async function loader({ request }: Route.LoaderArgs) {
   const user = await getUser(request);
   return { user };
@@ -83,8 +81,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         </pre>
       )}
       <p>
-        <a
-          href="/"
+        
+        <a  href="/"
           className="mt-6 inline-block bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition"
         >
           Go back home

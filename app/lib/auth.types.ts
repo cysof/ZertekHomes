@@ -1,7 +1,6 @@
-// app/lib/auth.types.ts
 // Plain type definitions only — no server imports, safe on client and server.
 
-export type UserRole = 'client' | 'agent' | 'affiliate';
+export type Role = 'client' | 'agent' | 'affiliate';
 
 export type User = {
   id: number;
@@ -10,10 +9,14 @@ export type User = {
   last_name: string;
   full_name: string;
   phone: string;
-  role: UserRole;
+  address: string;
+  bvn: string | null;
+  nin: string | null;
+  role: Role;
   is_verified: boolean;
   is_affiliate: boolean;
   profile_image: string | null;
+  image_url: string | null;
   date_joined: string;
 };
 

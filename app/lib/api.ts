@@ -14,6 +14,7 @@ export interface ApiProperty {
   is_featured: boolean;
   status: string;
   image_url: string | null;
+  video_url: string | null;  // add this
   description: string;
   amenities: string[];
   agent: {

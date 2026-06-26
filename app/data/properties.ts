@@ -1,6 +1,3 @@
-// app/data/properties.ts
-// This file will be replaced by API calls. Keeping for now with updated type.
-
 export type Property = {
   id: number;
   title: string;
@@ -12,6 +9,8 @@ export type Property = {
   sqft: string;
   is_featured: boolean;
   image_url: string | null;
+  video: string | null;
+  video_url: string | null;
   description: string;
   amenities: string[];
   image?: string;
@@ -28,6 +27,4 @@ export type Property = {
   updated_at: string;
 };
 
-// Temporary mock data matching API shape
-// Will be replaced with actual API calls
 export const properties: Property[] = [];

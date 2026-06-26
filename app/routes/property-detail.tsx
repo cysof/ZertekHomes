@@ -70,30 +70,45 @@ export default function PropertyDetail() {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Image */}
-            <div className="relative bg-gradient-to-br from-[#1B2A4A] to-[#2A3D5A] rounded-2xl overflow-hidden h-80 md:h-96 flex items-center justify-center">
-              {property.image_url ? (
-                <img
-                  src={property.image_url}
-                  alt={property.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-center">
-                  <div className="text-8xl mb-3">🏠</div>
-                  <p className="text-[#8A9A8A] text-sm">{property.location}, Abuja</p>
-                </div>
-              )}
-              <div className="absolute top-4 left-4 flex gap-2">
-                <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#1B2A4A] text-white">
-                  For Sale
-                </span>
-                {property.is_new && (
-                  <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#F57C00] text-white">
-                    New
-                  </span>
-                )}
-              </div>
-            </div>
+<div className="relative bg-gradient-to-br from-[#1B2A4A] to-[#2A3D5A] rounded-2xl overflow-hidden h-80 md:h-96 flex items-center justify-center">
+  {property.image_url ? (
+    <img
+      src={property.image_url}
+      alt={property.title}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="text-center">
+      <div className="text-8xl mb-3">🏠</div>
+      <p className="text-[#8A9A8A] text-sm">{property.location}, Abuja</p>
+    </div>
+  )}
+  <div className="absolute top-4 left-4 flex gap-2">
+    <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#1B2A4A] text-white">
+      For Sale
+    </span>
+    {property.is_new && (
+      <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#F57C00] text-white">
+        New
+      </span>
+    )}
+  </div>
+</div>
+
+{/* Video */}
+{property.video_url && (
+  <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#4A5A4A]/10">
+    <h2 className="text-xl font-bold text-[#1B2A4A] mb-4">Property Video</h2>
+    <video
+      className="w-full rounded-xl"
+      controls
+      preload="metadata"
+    >
+      <source src={property.video_url} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+)}
 
             {/* Title & Price */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#4A5A4A]/10">

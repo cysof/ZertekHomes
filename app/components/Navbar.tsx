@@ -112,15 +112,16 @@ export default function Navbar() {
                     </div>
 
                     {/* Profile link */}
-                    <Link
-                      to="/profile"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#1B2A4A]
-                                 hover:bg-gray-50 transition-colors"
-                    >
-                      <User size={14} />
-                      My Profile
-                    </Link>
+                   {/* Dashboard link */}
+<Link
+  to="/dashboard"
+  onClick={() => setDropdownOpen(false)}
+  className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#1B2A4A]
+             hover:bg-gray-50 transition-colors"
+>
+  <User size={14} />
+  Dashboard
+</Link>
 
                     {/* Logout */}
                     <Form method="post" action="/auth/logout">
@@ -204,14 +205,16 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                <Link
-                  to="/profile"
-                  className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm text-[#1B2A4A]
-                             hover:bg-gray-50 transition-colors"
-                >
-                  <User size={14} />
-                  My Profile
-                </Link>
+                {/* Dashboard link */}
+<Link
+  to="/dashboard"
+  onClick={() => setDropdownOpen(false)}
+  className="flex items-center gap-2 px-4 py-2.5 text-sm text-[#1B2A4A]
+             hover:bg-gray-50 transition-colors"
+>
+  <User size={14} />
+  Dashboard
+</Link>
 
                 <Form method="post" action="/auth/logout">
                   <button

@@ -6,19 +6,6 @@ import PropertyCard from '../components/PropertyCard';
 import AgentCard from '../components/AgentCard';
 import FeaturedCarousel from '../components/FeaturedCarousel';
 import { api, type ApiProperty, type ApiAgent } from '../lib/api';
-import heroImage from '../static/hero/idu faiheaven.jpeg';
-import heroImage2 from '../static/hero/solarcity.jpeg';
-import heroImage3 from '../static/hero/grandview.jpeg';
-import heroImage4 from '../static/hero/graceland.jpeg';
-import heroImage5 from '../static/hero/apoo.jpeg';
-
-const heroSlides = [
-  { id: 1, image: heroImage },
-  { id: 2, image: heroImage2 },
-  { id: 3, image: heroImage3 },
-  { id: 4, image: heroImage4 },
-  { id: 5, image: heroImage5 },
-];
 
 export default function Home() {
   const [properties, setProperties] = useState<ApiProperty[]>([]);
@@ -29,13 +16,16 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const topAgents = agents.slice(0, 4);
+  const heroSlides = featuredProperties.slice(0, 5); // ← first 5 featured from backend
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setCurrentSlide((prev) =>
+        heroSlides.length > 0 ? (prev + 1) % heroSlides.length : 0
+      );
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroSlides.length]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,8 +49,6 @@ export default function Home() {
 
     fetchData();
   }, []);
-
-  const slide = heroSlides[currentSlide];
 
   if (loading) {
     return (
@@ -90,16 +78,22 @@ export default function Home() {
     );
   }
 
+  const slide = heroSlides[currentSlide];
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Image Slideshow */}
+      {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={slide.image}
-            alt="Zertek Realty"
-            className="w-full h-full object-cover transition-all duration-1000"
-          />
+          {slide?.image_url ? (
+            <img
+              src={slide.image_url}
+              alt={slide.title}
+              className="w-full h-full object-cover transition-all duration-1000"
+            />
+          ) : (
+            <div className="w-full h-full bg-[#1B2A4A]" />
+          )}
           <div className="absolute inset-0 bg-[#1B2A4A]/40"></div>
         </div>
 
@@ -131,19 +125,22 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex justify-center gap-2 mt-10">
-            {heroSlides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentSlide(i)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === currentSlide
-                    ? 'bg-[#F57C00] w-8 h-2'
-                    : 'bg-white/30 hover:bg-white/50 w-2 h-2'
-                }`}
-              />
-            ))}
-          </div>
+          {/* Slide dots */}
+          {heroSlides.length > 0 && (
+            <div className="flex justify-center gap-2 mt-10">
+              {heroSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === currentSlide
+                      ? 'bg-[#F57C00] w-8 h-2'
+                      : 'bg-white/30 hover:bg-white/50 w-2 h-2'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -205,7 +202,7 @@ export default function Home() {
               {
                 icon: <Users size={28} className="text-[#F57C00]" />,
                 title: 'Expert Consultant',
-                desc: '48 well experirnce Consultant with deep knowledge of every Abuja district.',
+                desc: '48 well experienced Consultants with deep knowledge of every Abuja district.',
               },
               {
                 icon: <TrendingUp size={28} className="text-[#F57C00]" />,
@@ -225,12 +222,8 @@ export default function Home() {
                 <div className="bg-[#F57C00]/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4">
                   {item.icon}
                 </div>
-                <h3 className="font-bold text-white text-lg mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-[#8A9A8A] text-sm leading-relaxed">
-                  {item.desc}
-                </p>
+                <h3 className="font-bold text-white text-lg mb-2">{item.title}</h3>
+                <p className="text-[#8A9A8A] text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -245,7 +238,6 @@ export default function Home() {
               <p className="text-[#F57C00] font-semibold text-sm uppercase tracking-wider mb-2">
                 Our Team
               </p>
-              
             </div>
             <Link
               to="/agents"
@@ -264,7 +256,7 @@ export default function Home() {
               to="/agents"
               className="inline-flex items-center gap-2 bg-[#F57C00] hover:bg-[#E06B00] text-white font-semibold px-6 py-3 rounded-xl transition-colors"
             >
-          All Consultants
+              All Consultants
             </Link>
           </div>
         </div>
