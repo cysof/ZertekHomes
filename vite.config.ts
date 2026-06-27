@@ -1,13 +1,18 @@
-
 import { reactRouter } from '@react-router/dev/vite';
-import tailwindcss from '@tailwindcss/vite';  // ✅ add this
+import tailwindcss from '@tailwindcss/vite';
+import { vercelPreset } from '@vercel/react-router/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),      // ✅ must be before reactRouter
-    reactRouter(),
+    tailwindcss(),
+    reactRouter({
+      presets: [vercelPreset()],
+    }),
   ],
+  build: {
+    sourcemap: false,
+  },
   server: {
     proxy: {
       '/api': {
