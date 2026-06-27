@@ -13,9 +13,11 @@ export default [
   route('auth/register', 'routes/auth.register.tsx'),
   route('auth/logout', 'routes/auth.logout.tsx'),
 
-  // Dashboard routes
+  // Dashboard
   route('dashboard', 'routes/dashboard.tsx'),
   route('dashboard/client', 'routes/dashboard.buyer.tsx'),
   route('dashboard/agent', 'routes/dashboard.agent.tsx'),
   route('dashboard/affiliate', 'routes/dashboard.affiliate.tsx'),
 ] satisfies RouteConfig;
+
+// just making no changes
