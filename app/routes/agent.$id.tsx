@@ -3,12 +3,9 @@ import { useLoaderData, Link, useNavigate } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
 import {
   ArrowLeft,
-  MapPin,
   Phone,
   Mail,
-  Briefcase,
   Award,
-  Calendar,
   CheckCircle2,
   Home,
 } from 'lucide-react';
