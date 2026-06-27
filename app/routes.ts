@@ -15,7 +15,7 @@ export default [
 
   // Dashboard routes
   route('dashboard', 'routes/dashboard.tsx'),
-  route('dashboard/client', 'routes/dashboard.client.tsx'),
+  route('dashboard/client', 'routes/dashboard.buyer.tsx'),
   route('dashboard/agent', 'routes/dashboard.agent.tsx'),
   route('dashboard/affiliate', 'routes/dashboard.affiliate.tsx'),
 ] satisfies RouteConfig;

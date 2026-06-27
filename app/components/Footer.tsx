@@ -210,10 +210,10 @@ export default function Footer() {
         <div className="border-t border-[#4A5A4A]/30 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-[#8A9A8A]">
             © {new Date().getFullYear()} Zertek Realty Ltd. All rights reserved.
-            RC: 1234567
+            RC: 8846977
           </p>
           <p className="text-xs text-[#8A9A8A]">
-            Licensed by REDAN · FETBB Registered
+            Powered by Cysoft Home Technologies
           </p>
         </div>
       </div>

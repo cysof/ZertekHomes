@@ -2,7 +2,7 @@ import { useLoaderData, Link, useNavigate } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
 import { requireUser, getAccessToken } from '../lib/session.server';
 import { redirect } from 'react-router';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   LogOut, Home, Plus, List, MessageSquare, User,
   TrendingUp, Eye, CheckCircle2, XCircle, Star,
@@ -341,12 +341,22 @@ export default function AgentDashboard() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
 
 // ── Edit Profile Form ────────────────────────────────────────────────────────
+
+type SocialFormKey = 'bio' | 'years_experience' | 'specialization' |
+  'facebook_url' | 'instagram_url' | 'twitter_url' | 'linkedin_url' | 'whatsapp_url';
+
+const SOCIAL_LINKS: { key: SocialFormKey; label: string }[] = [
+  { key: 'facebook_url', label: 'Facebook URL' },
+  { key: 'instagram_url', label: 'Instagram URL' },
+  { key: 'twitter_url', label: 'Twitter URL' },
+  { key: 'linkedin_url', label: 'LinkedIn URL' },
+  { key: 'whatsapp_url', label: 'WhatsApp URL or Number' },
+];
 
 function EditProfileForm({
   user,
@@ -363,9 +373,48 @@ function EditProfileForm({
   const [error, setError] = useState<string | null>(null);
   const [phone, setPhone] = useState(user.phone ?? '');
   const [address, setAddress] = useState(user.address ?? '');
+  const [bvn, setBvn] = useState(user.bvn ?? '');
+  const [nin, setNin] = useState(user.nin ?? '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const [socialEditing, setSocialEditing] = useState(false);
+  const [socialLoading, setSocialLoading] = useState(false);
+  const [socialSuccess, setSocialSuccess] = useState(false);
+  const [socialError, setSocialError] = useState<string | null>(null);
+  const [socialForm, setSocialForm] = useState<Record<SocialFormKey, string>>({
+    bio: '', years_experience: '', specialization: '',
+    facebook_url: '', instagram_url: '', twitter_url: '',
+    linkedin_url: '', whatsapp_url: '',
+  });
+
+  const inputCls = 'w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl text-sm text-[#1B2A4A] outline-none focus:border-[#F57C00] focus:ring-2 focus:ring-[#F57C00]/20 transition bg-white';
+  const readonlyCls = 'w-full px-4 py-2.5 border border-[#4A5A4A]/10 rounded-xl text-sm text-[#8A9A8A] bg-[#F8FAFA] cursor-not-allowed select-none';
+  const labelCls = 'block text-xs font-medium text-[#8A9A8A] mb-1';
+  const currentAvatar = avatarPreview ?? user.image_url ?? null;
+  const initials = `${user.first_name?.[0] ?? ''}${user.last_name?.[0] ?? ''}`;
+
+  // ✅ Fixed: useEffect instead of useState for side effects
+  useEffect(() => {
+    fetch(`${API_BASE}/api/account/agent-profile/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setSocialForm({
+          bio: data.bio ?? '',
+          years_experience: String(data.years_experience ?? ''),
+          specialization: data.specialization ?? '',
+          facebook_url: data.facebook_url ?? '',
+          instagram_url: data.instagram_url ?? '',
+          twitter_url: data.twitter_url ?? '',
+          linkedin_url: data.linkedin_url ?? '',
+          whatsapp_url: data.whatsapp_url ?? '',
+        });
+      })
+      .catch(() => {});
+  }, [token]);
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null;
@@ -378,6 +427,8 @@ function EditProfileForm({
     setEditing(false);
     setPhone(user.phone ?? '');
     setAddress(user.address ?? '');
+    setBvn(user.bvn ?? '');
+    setNin(user.nin ?? '');
     setAvatarFile(null);
     setAvatarPreview(null);
     setError(null);
@@ -391,6 +442,8 @@ function EditProfileForm({
     const fd = new FormData();
     fd.append('phone', phone);
     fd.append('address', address);
+    if (!user.bvn && bvn) fd.append('bvn', bvn);
+    if (!user.nin && nin) fd.append('nin', nin);
     if (avatarFile) fd.append('profile_picture', avatarFile);
 
     try {
@@ -399,7 +452,6 @@ function EditProfileForm({
         headers: { Authorization: `Bearer ${token}` },
         body: fd,
       });
-
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         setError(err.detail ?? JSON.stringify(err));
@@ -407,7 +459,6 @@ function EditProfileForm({
         setSuccess(true);
         setEditing(false);
         setAvatarFile(null);
-        // Reload so header avatar + user data refresh
         onSaved();
       }
     } catch {
@@ -417,28 +468,47 @@ function EditProfileForm({
     }
   }
 
-  const inputCls =
-    'w-full px-4 py-2.5 border border-[#4A5A4A]/20 rounded-xl text-sm text-[#1B2A4A] outline-none focus:border-[#F57C00] focus:ring-2 focus:ring-[#F57C00]/20 transition bg-white';
-  const readonlyCls =
-    'w-full px-4 py-2.5 border border-[#4A5A4A]/10 rounded-xl text-sm text-[#8A9A8A] bg-[#F8FAFA] cursor-not-allowed select-none';
-  const labelCls = 'block text-xs font-medium text-[#8A9A8A] mb-1';
+  async function handleSocialSave() {
+    setSocialLoading(true);
+    setSocialError(null);
+    setSocialSuccess(false);
 
-  const currentAvatar = avatarPreview ?? user.image_url ?? null;
-  const initials = `${user.first_name?.[0] ?? ''}${user.last_name?.[0] ?? ''}`;
+    try {
+      const res = await fetch(`${API_BASE}/api/account/agent-profile/`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(socialForm),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setSocialError(err.detail ?? JSON.stringify(err));
+      } else {
+        setSocialSuccess(true);
+        setSocialEditing(false);
+      }
+    } catch {
+      setSocialError('Network error. Please try again.');
+    } finally {
+      setSocialLoading(false);
+    }
+  }
 
   return (
     <div className="max-w-2xl space-y-5">
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#4A5A4A]/10">
 
-        {/* Header row */}
+      {/* ── Personal Info Card ── */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#4A5A4A]/10">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-[#1B2A4A]">My Profile</h2>
+          <h2 className="text-lg font-bold text-[#1B2A4A]">Personal Information</h2>
           {!editing ? (
             <button
               onClick={() => { setEditing(true); setSuccess(false); }}
               className="flex items-center gap-1.5 text-sm font-semibold text-[#F57C00] hover:text-[#E06B00] transition"
             >
-              <Edit size={14} /> Edit Profile
+              <Edit size={14} /> Edit
             </button>
           ) : (
             <button
@@ -450,14 +520,11 @@ function EditProfileForm({
           )}
         </div>
 
-        {/* Success banner */}
         {success && (
           <div className="mb-4 bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl">
             Profile updated successfully.
           </div>
         )}
-
-        {/* Error banner */}
         {error && (
           <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">
             {error}
@@ -479,17 +546,10 @@ function EditProfileForm({
                 <button
                   onClick={() => fileRef.current?.click()}
                   className="absolute -bottom-1 -right-1 w-7 h-7 bg-[#F57C00] hover:bg-[#E06B00] text-white rounded-full flex items-center justify-center shadow-md transition"
-                  title="Change photo"
                 >
                   <Camera size={13} />
                 </button>
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAvatarChange}
-                />
+                <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
               </>
             )}
           </div>
@@ -499,81 +559,97 @@ function EditProfileForm({
             <span className="text-xs bg-[#F57C00]/10 text-[#F57C00] px-2 py-0.5 rounded-full mt-1 inline-block">
               {user.is_verified ? 'Verified Agent' : 'Pending Approval'}
             </span>
-            {editing && (
-              <p className="text-xs text-[#8A9A8A] mt-1.5">
-                Click the <Camera size={10} className="inline" /> icon to change your photo
-              </p>
-            )}
           </div>
         </div>
 
-        {/* Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-          {/* Read-only: Full Name */}
           <div>
             <label className={labelCls}>Full Name</label>
             <div className={readonlyCls}>{user.full_name}</div>
-            <p className="text-[10px] text-[#8A9A8A] mt-1">Contact support to change your name</p>
+            <p className="text-[10px] text-[#8A9A8A] mt-1">Contact support to change</p>
           </div>
-
-          {/* Read-only: Email */}
           <div>
             <label className={labelCls}>Email Address</label>
             <div className={readonlyCls}>{user.email}</div>
-            <p className="text-[10px] text-[#8A9A8A] mt-1">Contact support to change your email</p>
+            <p className="text-[10px] text-[#8A9A8A] mt-1">Contact support to change</p>
           </div>
-
-          {/* Editable: Phone */}
           <div>
-            <label className={labelCls}>
-              <span className="flex items-center gap-1"><Phone size={11} /> Phone Number</span>
-            </label>
+            <label className={labelCls}>Phone Number</label>
             {editing ? (
-              <input
-                className={inputCls}
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="e.g. +234 800 000 0000"
-              />
+              <input className={inputCls} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="e.g. +234 800 000 0000" />
             ) : (
               <div className={readonlyCls}>{user.phone || '—'}</div>
             )}
           </div>
-
-          {/* Editable: Address */}
           <div>
-            <label className={labelCls}>
-              <span className="flex items-center gap-1"><MapPinned size={11} /> Address</span>
-            </label>
+            <label className={labelCls}>Address</label>
             {editing ? (
-              <input
-                className={inputCls}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="e.g. 12 Herbert Macaulay Way, Abuja"
-              />
+              <input className={inputCls} value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. 12 Herbert Macaulay Way, Abuja" />
             ) : (
               <div className={readonlyCls}>{user.address || '—'}</div>
             )}
           </div>
 
-          {/* Read-only: Member Since */}
+          {/* BVN — one-time editable */}
+          <div>
+            <label className={labelCls}>
+              BVN
+              {user.bvn && (
+                <span className="ml-2 text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">
+                  Locked — contact admin to change
+                </span>
+              )}
+            </label>
+            {editing && !user.bvn ? (
+              <input
+                className={inputCls}
+                value={bvn}
+                onChange={(e) => setBvn(e.target.value)}
+                placeholder="Enter your BVN"
+                maxLength={11}
+              />
+            ) : (
+              <div className={readonlyCls}>
+                {user.bvn ? '•••••••••' + user.bvn.slice(-2) : '—'}
+              </div>
+            )}
+          </div>
+
+          {/* NIN — one-time editable */}
+          <div>
+            <label className={labelCls}>
+              NIN
+              {user.nin && (
+                <span className="ml-2 text-[10px] text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">
+                  Locked — contact admin to change
+                </span>
+              )}
+            </label>
+            {editing && !user.nin ? (
+              <input
+                className={inputCls}
+                value={nin}
+                onChange={(e) => setNin(e.target.value)}
+                placeholder="Enter your NIN"
+                maxLength={11}
+              />
+            ) : (
+              <div className={readonlyCls}>
+                {user.nin ? '•••••••••' + user.nin.slice(-2) : '—'}
+              </div>
+            )}
+          </div>
+
           <div>
             <label className={labelCls}>Member Since</label>
             <div className={readonlyCls}>{new Date(user.date_joined).toLocaleDateString()}</div>
           </div>
-
-          {/* Read-only: Verified */}
           <div>
             <label className={labelCls}>Verification Status</label>
             <div className={readonlyCls}>{user.is_verified ? 'Verified' : 'Pending Approval'}</div>
           </div>
-
         </div>
 
-        {/* Save button */}
         {editing && (
           <div className="mt-6 flex justify-end">
             <button
@@ -586,7 +662,124 @@ function EditProfileForm({
             </button>
           </div>
         )}
+      </div>
 
+      {/* ── Agent Profile & Social Links Card ── */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#4A5A4A]/10">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-bold text-[#1B2A4A]">Agent Profile & Social Links</h2>
+          {!socialEditing ? (
+            <button
+              onClick={() => { setSocialEditing(true); setSocialSuccess(false); }}
+              className="flex items-center gap-1.5 text-sm font-semibold text-[#F57C00] hover:text-[#E06B00] transition"
+            >
+              <Edit size={14} /> Edit
+            </button>
+          ) : (
+            <button
+              onClick={() => setSocialEditing(false)}
+              className="flex items-center gap-1.5 text-sm font-medium text-[#8A9A8A] hover:text-[#1B2A4A] transition"
+            >
+              <X size={14} /> Cancel
+            </button>
+          )}
+        </div>
+
+        {socialSuccess && (
+          <div className="mb-4 bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl">
+            Agent profile updated successfully.
+          </div>
+        )}
+        {socialError && (
+          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">
+            {socialError}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="md:col-span-2">
+            <label className={labelCls}>Bio</label>
+            {socialEditing ? (
+              <textarea
+                className={inputCls}
+                rows={3}
+                value={socialForm.bio}
+                onChange={(e) => setSocialForm((p) => ({ ...p, bio: e.target.value }))}
+                placeholder="Tell clients about yourself..."
+              />
+            ) : (
+              <div className={readonlyCls}>{socialForm.bio || '—'}</div>
+            )}
+          </div>
+          <div>
+            <label className={labelCls}>Years of Experience</label>
+            {socialEditing ? (
+              <input
+                className={inputCls}
+                type="number"
+                min={0}
+                value={socialForm.years_experience}
+                onChange={(e) => setSocialForm((p) => ({ ...p, years_experience: e.target.value }))}
+              />
+            ) : (
+              <div className={readonlyCls}>{socialForm.years_experience || '—'}</div>
+            )}
+          </div>
+          <div>
+            <label className={labelCls}>Specialization</label>
+            {socialEditing ? (
+              <input
+                className={inputCls}
+                value={socialForm.specialization}
+                onChange={(e) => setSocialForm((p) => ({ ...p, specialization: e.target.value }))}
+                placeholder="e.g. Residential, Commercial"
+              />
+            ) : (
+              <div className={readonlyCls}>{socialForm.specialization || '—'}</div>
+            )}
+          </div>
+
+          {/* ✅ Fixed: SOCIAL_LINKS defined outside JSX, no "as const" in JSX */}
+          {SOCIAL_LINKS.map(({ key, label }) => (
+            <div key={key}>
+              <label className={labelCls}>{label}</label>
+              {socialEditing ? (
+                <input
+                  className={inputCls}
+                  value={socialForm[key]}
+                  onChange={(e) => setSocialForm((p) => ({ ...p, [key]: e.target.value }))}
+                  placeholder={key === 'whatsapp_url' ? 'https://wa.me/234...' : 'https://...'}
+                />
+              ) : (
+                <div className={readonlyCls}>
+                  {socialForm[key] ? (
+                    <a
+                      href={socialForm[key]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#F57C00] hover:underline truncate block"
+                    >
+                      {socialForm[key]}
+                    </a>
+                  ) : '—'}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {socialEditing && (
+          <div className="mt-6 flex justify-end">
+            <button
+              onClick={handleSocialSave}
+              disabled={socialLoading}
+              className="flex items-center gap-2 bg-[#F57C00] hover:bg-[#E06B00] disabled:opacity-60 text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition"
+            >
+              <Save size={15} />
+              {socialLoading ? 'Saving…' : 'Save Agent Profile'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -643,7 +836,6 @@ function CreateListingForm({ token, onSuccess }: { token: string; onSuccess: () 
         headers: { Authorization: `Bearer ${token}` },
         body: fd,
       });
-
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         setError(err.detail ?? JSON.stringify(err));

@@ -6,14 +6,19 @@ if (!process.env.SESSION_SECRET) {
   throw new Error('SESSION_SECRET environment variable is required');
 }
 
+const API_BASE_URL = process.env.API_BASE_URL;
+if (!API_BASE_URL) {
+  throw new Error('API_BASE_URL environment variable is required');
+}
+
 const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: '__zertek_session',
-    httpOnly: true,   // JS can't read this — immune to XSS token theft
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 60 * 24 * 7,  // 7 days — matches your REFRESH_TOKEN_LIFETIME
+    maxAge: 60 * 60 * 24 * 7,
     secrets: [process.env.SESSION_SECRET],
   },
 });
@@ -31,7 +36,7 @@ export async function createAuthSession(
   const session = await sessionStorage.getSession();
   session.set('access', authData.access);
   session.set('refresh', authData.refresh);
-  session.set('user', authData.user);
+  // user object intentionally not stored — always fetched live from Django
 
   return redirect(redirectTo, {
     headers: {
@@ -49,28 +54,58 @@ export async function destroyAuthSession(request: Request, redirectTo = '/') {
   });
 }
 
-/** Read user out of session — null if not logged in */
+/** Fetch fresh user data from Django on every request */
 export async function getUser(request: Request): Promise<User | null> {
   const session = await getSession(request);
-  return session.get('user') ?? null;
+  const access = session.get('access');
+  const refresh = session.get('refresh');
+
+  if (!access) return null;
+
+  // 1. Try with current access token
+  let res = await fetch(`${API_BASE_URL}/api/account/profile/`, {
+    headers: { Authorization: `Bearer ${access}` },
+  });
+
+  // 2. If expired, attempt refresh
+  if (res.status === 401 && refresh) {
+    const refreshRes = await fetch(`${API_BASE_URL}/api/account/refresh/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh }),
+    });
+
+    if (!refreshRes.ok) return null; // refresh token also expired → force login
+
+    const { access: newAccess } = await refreshRes.json();
+    session.set('access', newAccess);
+
+    // Retry profile fetch with new access token
+    res = await fetch(`${API_BASE_URL}/api/account/profile/`, {
+      headers: { Authorization: `Bearer ${newAccess}` },
+    });
+  }
+
+  if (!res.ok) return null;
+
+  return (await res.json()) as User;
 }
 
-/** Read access token out of session — null if not logged in */
+/** Read access token out of session */
 export async function getAccessToken(request: Request): Promise<string | null> {
   const session = await getSession(request);
   return session.get('access') ?? null;
 }
 
-/** Read refresh token out of session — null if not logged in */
+/** Read refresh token out of session */
 export async function getRefreshToken(request: Request): Promise<string | null> {
   const session = await getSession(request);
   return session.get('refresh') ?? null;
 }
 
 /**
- * Require auth — call at the top of any protected loader/action.
- * Redirects to /auth/login with a `?redirectTo` param so the user
- * lands back on the page they were trying to visit after logging in.
+ * Require auth — redirects to /auth/login if not logged in.
+ * Returns fresh user data from Django.
  */
 export async function requireUser(request: Request): Promise<User> {
   const user = await getUser(request);

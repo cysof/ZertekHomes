@@ -1,7 +1,7 @@
 // app/components/AgentCard.tsx
 import { useNavigate } from 'react-router';
 import { Phone } from 'lucide-react';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import type { Agent } from '../data/agents';
 
 type Props = {
@@ -18,6 +18,12 @@ export default function AgentCard({ agent }: Props) {
 
   const imageUrl = agent.image_url;
   const displayName = agent.name ?? 'Unknown Agent';
+
+  const whatsappHref = agent.whatsapp_url
+    ? agent.whatsapp_url.startsWith('http')
+      ? agent.whatsapp_url
+      : `https://wa.me/${agent.whatsapp_url.replace(/\D/g, '')}`
+    : null;
 
   return (
     <div
@@ -95,6 +101,7 @@ export default function AgentCard({ agent }: Props) {
             { Icon: FaTwitter,   url: agent.twitter_url,   label: 'Twitter' },
             { Icon: FaInstagram, url: agent.instagram_url, label: 'Instagram' },
             { Icon: FaLinkedin,  url: agent.linkedin_url,  label: 'LinkedIn' },
+            { Icon: FaWhatsapp,  url: whatsappHref,        label: 'WhatsApp' },
           ].map(({ Icon, url, label }) => (
             <a
               key={label}

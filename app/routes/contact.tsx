@@ -43,35 +43,36 @@ export default function Contact() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+  try {
+    const res = await fetch('/api/agent/contact/', {
+            method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-    console.log('Form submitted:', formData);
+    if (!res.ok) throw new Error('Failed to send');
+
     setIsSubmitted(true);
-    setIsSubmitting(false);
-
-    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-      });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     }, 3000);
-  };
+  } catch {
+    alert('Something went wrong. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const officeLocation = {
     name: 'Head Office',
     address: 'suite E1301, Apo Urban Market, Abuja FCT Nigeria',
     phone: '+234 9169029904',
     email: 'zertekrealityhome@gmail.com',
-    hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
+    hours: 'Monday - Friday: 9:00 AM - 5:00 PM',
     saturday: 'Saturday: 10:00 AM - 2:00 PM',
     sunday: 'Sunday: Closed',
   };
@@ -126,9 +127,9 @@ export default function Contact() {
             <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone size={24} className="text-[#F57C00]" />
             </div>
-            <h3 className="font-bold text-white mb-2">24/7 Phone Support</h3>
+            <h3 className="font-bold text-white mb-2">Phone Support</h3>
             <p className="text-[#8A9A8A] mb-2">+234 9169029904</p>
-            <p className="text-sm text-[#8A9A8A]/60">Emergency inquiries only</p>
+            <p className="text-sm text-[#8A9A8A]/60">Emergency inquiries During Office Hours Only</p>
           </div>
 
           <div className="bg-[#1B2A4A] rounded-2xl shadow-lg p-6 text-center hover:shadow-xl hover:shadow-[#F57C00]/10 transition-shadow border border-[#4A5A4A]/20">
@@ -144,10 +145,10 @@ export default function Contact() {
             <div className="w-12 h-12 bg-[#F57C00]/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <FaWhatsapp size={24} className="text-[#F57C00]" />
             </div>
-            <h3 className="font-bold text-white mb-2">WhatsApp Chat</h3>
+            <h3 className="font-bold text-white mb-2">WhatsApp Chat Only</h3>
             <p className="text-[#8A9A8A] mb-2">+234 7013445496</p>
             <p className="text-sm text-[#8A9A8A]/60">
-              Quick response during business hours
+              Quick response 24/7 hours Remember Whatsapp Only
             </p>
           </div>
         </div>
